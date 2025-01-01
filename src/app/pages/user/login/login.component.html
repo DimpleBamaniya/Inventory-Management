@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="login.component.scss">
+</head>
+
+<body>
+    <div class="form-container">
+        <label for="loginForm" class="form-title">Login Form</label>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+            <div class="input-box">
+                <label for="uname" class="uname"><b>EmailID</b></label>
+                <input type="email" formControlName="emailID" placeholder="Enter EmailID" name="uname" required>
+                <div *ngIf="emailID?.invalid && emailID?.touched" class="error">
+                    <div *ngIf="emailID?.errors?.['required']">Email is required.</div>
+                    <div *ngIf="emailID?.errors?.['email']">Invalid email format.</div>
+                </div>
+
+                <label for="psw" class="psw"><b>Password</b></label>
+                <input type="password" formControlName="password" placeholder="Enter Password" name="psw" required>
+                <div *ngIf="password?.invalid && password?.touched" class="error">
+                    <div *ngIf="password?.errors?.['required']">Password is required.</div>
+                    <div *ngIf="password?.errors?.['minlength']">
+                        Password must be at least 6 characters long.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form> 
+    </div>
+</body>
+
+</html>
