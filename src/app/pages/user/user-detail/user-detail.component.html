@@ -1,1 +1,50 @@
-<p>user-detail works!</p>
+<app-layout></app-layout>
+<div class="form-container">
+    <h1>User Form</h1>
+    <form id="userForm">
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email ID:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <!-- city-list.component.html -->
+        <div>
+            <label for="city">Select City:</label>
+            <select id="city">
+                <option value="" disabled selected>Select City</option>
+                <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="department">Department:</label>
+            <select id="department" name="department" required>
+                <option value="">-- Select Department --</option>
+                <option value="1">Department 1</option>
+                <option value="2">Department 2</option>
+                <option value="3">Department 3</option>
+            </select>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('userForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+        console.log('Submitted Data:', data);
+        alert('Form submitted successfully!');
+    });
+</script>

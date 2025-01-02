@@ -1,23 +1,26 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { UserService } from './user.service';
-import { RouterOutlet } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { LayoutComponent } from './layout/layout.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { AppComponent } from '../../app.component';
+import { RouterModule, Routes } from '@angular/router';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { LayoutComponent } from '../layout/layout.component';
 
-
+export const routes: Routes = [
+{
+    path: 'detail/:id',
+    component: UserDetailComponent
+},
+{
+    path: 'list',
+    component: UserListComponent
+}
+];
 
 @NgModule({
-  declarations: [LoginComponent,LayoutComponent,DashboardComponent,UserDetailComponent,UserListComponent],
-  imports: [FormsModule, HttpClientModule, ReactiveFormsModule, CommonModule],
+  declarations: [UserDetailComponent,UserListComponent],
+  imports: [CommonModule,RouterModule.forChild(routes),LayoutComponent],
   exports:[],
-  providers: [UserService,HttpClient],
+  providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: []
 })

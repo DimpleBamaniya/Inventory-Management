@@ -1,12 +1,18 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../user.service';
-import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserService } from '../user/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import { CityService } from '../city/city.service';
 
 @Component({
   selector: 'app-login',
+  standalone : true,
+  imports: [FormsModule, HttpClientModule, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
+  providers: [UserService,HttpClient,CityService],
   styleUrls: ['./login.component.scss']
 })
 
@@ -17,7 +23,7 @@ export class LoginComponent implements OnInit {
   loginUserDetails : any;
   loginForm : FormGroup;
 
-  constructor(private http: HttpClient, private userService: UserService, private router: Router,private _formBuilder: FormBuilder) { 
+  constructor(private http: HttpClient, private userService: UserService, private router: Router,private _formBuilder: FormBuilder,private _activeRoute: ActivatedRoute,private cityService: CityService) { 
     this.loginForm = this._formBuilder.group({
       emailID: ['', Validators.compose([Validators.required])],
       password: ['', Validators.required],
@@ -25,6 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllCity();
   }
  
   onLogin() {
@@ -37,13 +44,26 @@ export class LoginComponent implements OnInit {
         this.isLoginUser = true;
         this.loginUserDetails = res.data;
         localStorage.setItem('loginUserDetails', JSON.stringify(this.loginUserDetails));
-        this.router.navigateByUrl('/dashboard');
-
+        if (this.loginUserDetails.permissions) {
+          this.router.navigateByUrl(`/user/list`);
+        } else {
+          this.router.navigateByUrl(`/user/detail/${this.loginUserDetails.id}`);
+        }
       } else {
         alert(res.message);
       }
 
     });
+  }
+
+  getAllCity(){
+    this.cityService.getAllCities().subscribe(cities => {
+     var cities = cities;
+       console.log(cities);
+    });
+    
+    // this.cityService.getAllCities().then((res: any) => {
+    // });
   }
 
 

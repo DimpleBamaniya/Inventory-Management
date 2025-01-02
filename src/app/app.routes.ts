@@ -1,9 +1,8 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './pages/user/login/login.component';
-import { LayoutComponent } from './pages/user/layout/layout.component';
-import { DashboardComponent } from './pages/user/dashboard/dashboard.component';
-import { UserDetailComponent } from './pages/user/user-detail/user-detail.component';
-import { UserListComponent } from './pages/user/user-list/user-list.component';
+import { LoginComponent } from './pages/login/login.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { LogoutComponent } from './pages/logout/logout.component';
+import { LayoutComponent } from './pages/layout/layout.component';
 
 export const routes: Routes = [
     {
@@ -14,6 +13,10 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    }, 
+    {
+        path: 'user',
+        loadChildren: () => import('../app/pages/user/user.module').then(m => m.UserModule),
     },
     {
         path: '',
@@ -22,16 +25,12 @@ export const routes: Routes = [
             {
                 path: 'dashboard',
                 component: DashboardComponent
-            }
+            },
+            {
+                path: 'logout',
+                component: LogoutComponent
+            },
         ]
-    },
-    {
-        path: 'user-detail/:id',
-        component: UserDetailComponent
-    },
-    {
-        path: 'user-list',
-        component: UserListComponent
     },
     {
         path: '**',
