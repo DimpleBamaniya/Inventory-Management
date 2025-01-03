@@ -16,4 +16,16 @@ export class UserService {
     return this.http.post<any>(this.apiUrl + "/GetUserDetailByEmailID", user);  // Make the POST request and return the observable
   }
 
+   // Method to authenticate user via Web API
+   getUserDetails(userId: any): Observable<any> {
+    let params = { 'id': userId };
+    return this.http.post<any>(`${this.apiUrl}/GetUserDetailByID`, params);  // Make the POST request and return the observable
+  }
+
+   // Method to authenticate user via Web API
+   saveUser(userdetail: any): Observable<any> {
+    // let params = { 'id': userId };
+    return this.http.post<any>(`${this.apiUrl}/saveUser`, userdetail);  // Make the POST request and return the observable
+  }
+
 }

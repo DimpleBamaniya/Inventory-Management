@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CityService } from '../../city/city.service';
+import { DepartmentService } from '../../department/department.service';
+import { UserService } from '../user.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-detail',
@@ -7,16 +11,73 @@ import { CityService } from '../../city/city.service';
   styleUrl: './user-detail.component.scss'
 })
 export class UserDetailComponent implements OnInit {
-  cities : any = null;
-  constructor(private cityService: CityService) { }
-  ngOnInit(): void {
-    this.getAllCity();
+  cities: any = null;
+  departments: any = null;
+  userDetails: any = null;
+  userForm: FormGroup;
+
+  constructor(
+    private userService : UserService,
+    private cityService: CityService,
+    private departmentService: DepartmentService,
+    private fb: FormBuilder,private _activeRoute: ActivatedRoute) { 
+      this.userForm = this.fb.group({
+        id: [""],
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        emailID: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        cityID: ['', Validators.required],
+        departmentID: ['', Validators.required]
+      });
+    }
+    ngOnInit(): void {
+      this.getAllCity();
+      this.getAllDepartments();
+      const userID = this._activeRoute.snapshot.paramMap.get('id');
+      this.getUserDetails(userID);
+    this.userForm.patchValue(this.userDetails); // P
   }
-  getAllCity(){
+
+  getAllCity() {
     this.cityService.getAllCities().subscribe(cities => {
-     this.cities = cities;
-       console.log(cities);
+      this.cities = cities;
     });
-    
-}
+  }
+
+  getAllDepartments() {
+    this.departmentService.getAllDepartments().subscribe(department => {
+      this.departments = department;
+    });
+  }
+
+  getUserDetails(userID: any){
+      this.userService.getUserDetails(userID).subscribe(userdetail => {
+        this.userDetails = userdetail.data;
+        if (this.userDetails) {
+          this.userForm.patchValue({
+            id : this.userDetails.id,
+            firstName: this.userDetails.firstName,
+            lastName: this.userDetails.lastName,
+            emailID: this.userDetails.emailID,
+            password: this.userDetails.password,
+            cityID: this.userDetails.cityID,
+            departmentID: this.userDetails.departmentID
+          });
+        }
+      });
+    }
+
+  onSubmit() {
+    if (this.userForm.valid) {
+      console.log('Form Submitted:', this.userForm.value);
+
+      this.userService.saveUser(this.userForm.value).subscribe(userdetail => {
+        console.log(userdetail);
+      });
+    } else {
+      console.error('Form is invalid');
+
+    }
+  }
 }

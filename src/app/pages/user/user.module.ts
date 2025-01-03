@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { LayoutComponent } from '../layout/layout.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export const routes: Routes = [
 {
@@ -18,7 +19,7 @@ export const routes: Routes = [
 
 @NgModule({
   declarations: [UserDetailComponent,UserListComponent],
-  imports: [CommonModule,RouterModule.forChild(routes),LayoutComponent],
+  imports: [CommonModule,RouterModule.forChild(routes),LayoutComponent,ReactiveFormsModule],
   exports:[],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

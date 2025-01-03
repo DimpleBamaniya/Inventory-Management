@@ -6,13 +6,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { CityService } from '../city/city.service';
+import { DepartmentService } from '../department/department.service';
 
 @Component({
   selector: 'app-login',
   standalone : true,
   imports: [FormsModule, HttpClientModule, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
-  providers: [UserService,HttpClient,CityService],
+  providers: [UserService,HttpClient,CityService,DepartmentService],
   styleUrls: ['./login.component.scss']
 })
 
@@ -23,7 +24,13 @@ export class LoginComponent implements OnInit {
   loginUserDetails : any;
   loginForm : FormGroup;
 
-  constructor(private http: HttpClient, private userService: UserService, private router: Router,private _formBuilder: FormBuilder,private _activeRoute: ActivatedRoute,private cityService: CityService) { 
+  constructor(
+    private http: HttpClient, 
+    private userService: UserService, 
+    private router: Router,
+    private _formBuilder: FormBuilder,
+    private _activeRoute: ActivatedRoute
+  ) { 
     this.loginForm = this._formBuilder.group({
       emailID: ['', Validators.compose([Validators.required])],
       password: ['', Validators.required],
@@ -31,7 +38,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllCity();
   }
  
   onLogin() {
@@ -55,17 +61,6 @@ export class LoginComponent implements OnInit {
 
     });
   }
-
-  getAllCity(){
-    this.cityService.getAllCities().subscribe(cities => {
-     var cities = cities;
-       console.log(cities);
-    });
-    
-    // this.cityService.getAllCities().then((res: any) => {
-    // });
-  }
-
 
   // Getter methods for form controls to simplify validation logic in the template
   get emailID() {
