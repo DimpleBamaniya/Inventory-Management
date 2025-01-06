@@ -15,6 +15,10 @@ export const routes: Routes = [
         component: LoginComponent
     }, 
     {
+        path: 'dashbourd',
+        component: DashboardComponent
+    }, 
+    {
         path: 'user',
         loadChildren: () => import('../app/pages/user/user.module').then(m => m.UserModule),
     },

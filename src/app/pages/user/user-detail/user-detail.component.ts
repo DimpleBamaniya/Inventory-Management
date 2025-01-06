@@ -3,7 +3,7 @@ import { CityService } from '../../city/city.service';
 import { DepartmentService } from '../../department/department.service';
 import { UserService } from '../user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-detail',
@@ -20,7 +20,9 @@ export class UserDetailComponent implements OnInit {
     private userService : UserService,
     private cityService: CityService,
     private departmentService: DepartmentService,
-    private fb: FormBuilder,private _activeRoute: ActivatedRoute) { 
+    private fb: FormBuilder,
+    private _activeRoute: ActivatedRoute,
+    private router: Router) { 
       this.userForm = this.fb.group({
         id: [""],
         firstName: ['', Validators.required],
@@ -59,11 +61,14 @@ export class UserDetailComponent implements OnInit {
             id : this.userDetails.id,
             firstName: this.userDetails.firstName,
             lastName: this.userDetails.lastName,
-            emailID: this.userDetails.emailID,
-            password: this.userDetails.password,
+            emailID: this.userDetails.emailID ? this.userDetails.emailID : '',
+            password: this.userDetails.password ?this.userDetails.password : '',
             cityID: this.userDetails.cityID,
             departmentID: this.userDetails.departmentID
           });
+        }
+        else{
+          this.router.navigateByUrl(`/dashbourd`);
         }
       });
     }
@@ -73,7 +78,6 @@ export class UserDetailComponent implements OnInit {
       console.log('Form Submitted:', this.userForm.value);
 
       this.userService.saveUser(this.userForm.value).subscribe(userdetail => {
-        console.log(userdetail);
       });
     } else {
       console.error('Form is invalid');

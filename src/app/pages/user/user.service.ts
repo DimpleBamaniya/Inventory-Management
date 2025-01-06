@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BasicPagingParams} from '../../core/sharedModels/paging-params.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,10 @@ export class UserService {
    saveUser(userdetail: any): Observable<any> {
     // let params = { 'id': userId };
     return this.http.post<any>(`${this.apiUrl}/saveUser`, userdetail);  // Make the POST request and return the observable
+  }
+
+  getAllUser(pagination: BasicPagingParams) {
+    return this.http.post<any>(`${this.apiUrl}/GetAllUserDetails`, pagination);  
   }
 
 }
