@@ -16,13 +16,13 @@
   <div class="container-fluid">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a *ngIf="!ispermission" class="nav-link" routerLink="/user/detail/" routerLinkActive="active">My Details</a>
+        <a  class="nav-link" (click)="login()">Home</a>
       </li>
       <li class="nav-item">
-        <a *ngIf="ispermission" class="nav-link" routerLink="/user/list" routerLinkActive="active">User List</a>
+        <a *ngIf="isShowUserListButton" class="nav-link" (click)="getUserList()">User List</a>
       </li>
       <li class="nav-item">
-        <a *ngIf="ispermission" class="nav-link" href="#">Product Management</a>
+        <a *ngIf="isShowProductButton" class="nav-link" href="#">Product Management</a>
       </li>
     </ul>
     <li class="d-flex">

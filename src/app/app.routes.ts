@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { LayoutComponent } from './pages/layout/layout.component';
+import { UserNotFoundComponent } from './pages/user/user-not-found/user-not-found.component';
 
 export const routes: Routes = [
     {
@@ -15,8 +15,8 @@ export const routes: Routes = [
         component: LoginComponent
     }, 
     {
-        path: 'dashbourd',
-        component: DashboardComponent
+        path: 'userNotFound',
+        component: UserNotFoundComponent
     }, 
     {
         path: 'user',
@@ -26,10 +26,6 @@ export const routes: Routes = [
         path: '',
         component: LayoutComponent,
         children: [
-            {
-                path: 'dashboard',
-                component: DashboardComponent
-            },
             {
                 path: 'logout',
                 component: LogoutComponent

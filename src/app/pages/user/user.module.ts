@@ -18,7 +18,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [UserDetailComponent,UserListComponent],
+  declarations: [UserDetailComponent],
   imports: [CommonModule,RouterModule.forChild(routes),LayoutComponent,ReactiveFormsModule],
   exports:[],
   providers: [],

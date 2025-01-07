@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
@@ -12,9 +12,10 @@ import { Router, RouterOutlet } from '@angular/router';
 export class LayoutComponent implements OnInit {
 
   ispermission: boolean = false;
-
+  isShowProductButton : boolean = false;
+  isShowUserListButton: boolean = false;
   loginUserDetails: any = null;
-  constructor(private router: Router) { }
+  constructor(private router: Router,private _activeRoute: ActivatedRoute,) { }
 
   ngOnInit(): void  {
     //get data from local Storage
@@ -24,7 +25,10 @@ export class LayoutComponent implements OnInit {
     } else {
       this.ispermission = false;
     }
+    this.showUserList();
+    this.showProductButton();
   }
+
   logout(): void {
     // Perform any logout-related logic, e.g., clearing local storage
     localStorage.removeItem('loginUserDetails'); // Example of clearing session data
@@ -34,6 +38,31 @@ export class LayoutComponent implements OnInit {
 
   onClickLogout(): void {
     this.router.navigateByUrl('/logout');
+  }
+
+  login(): void {
+    // Perform any logout-related logic, e.g., clearing local storage
+    localStorage.removeItem('loginUserDetails'); // Example of clearing session data
+    // Navigate to the login page
+    this.router.navigateByUrl('/login');
+  }
+
+  getUserList(): void {
+      // Navigate to the login page
+      this.router.navigateByUrl('/user/list');
+  }
+
+  showUserList(): void {
+    const userID = this._activeRoute.snapshot.paramMap.get('id');
+    if(this.router.url == ('/user/detail/'+ userID) && this.ispermission){
+      this.isShowUserListButton = true;
+    }
+  }
+
+  showProductButton(): void {
+    if(this.ispermission && this.router.url != '/userNotFound'){
+      this.isShowProductButton = true;
+    }
   }
 
 }

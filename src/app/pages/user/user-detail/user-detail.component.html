@@ -1,23 +1,33 @@
 <app-layout></app-layout>
 <div class="form-container">
     <h1>User Form</h1>
+    <!-- <div>
+        <button *ngIf="isReadOnly"  type="submit">Edit</button>
+        <button *ngIf="!isReadOnly" type="submit">Save</button>
+    </div> -->
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <!-- <div>
+            <i *ngIf="isReadOnly" class="fa-solid fa-check" [attr.title]="'Edit'"></i>
+            <i *ngIf="!isReadOnly" class="fa-solid fa-floppy-disk" [attr.title]="'Save'"></i>
+          </div> -->
         <!-- First Name -->
         <div class="form-group">
             <label for="firstName">First Name:</label>
-            <input 
-                type="text" 
-                id="firstName" 
-                formControlName="firstName" 
-                placeholder="Enter your first name" 
-                required
-            >
+                <input  
+                    [readonly]="isReadOnly" 
+                    type="text" 
+                    id="firstName" 
+                    formControlName="firstName" 
+                    placeholder="Enter your first name" 
+                    required
+                >
         </div>
 
         <!-- Last Name -->
         <div class="form-group">
             <label for="lastName">Last Name:</label>
             <input 
+                [readonly]="isReadOnly" 
                 type="text" 
                 id="lastName" 
                 formControlName="lastName" 
@@ -30,6 +40,7 @@
         <div class="form-group">
             <label for="email">Email ID:</label>
             <input 
+                [readonly]="isReadOnly" 
                 type="email" 
                 id="email" 
                 formControlName="emailID" 
@@ -42,6 +53,7 @@
         <div class="form-group">
             <label for="password">Password:</label>
             <input 
+                [readonly]="isReadOnly" 
                 type="password" 
                 id="password" 
                 formControlName="password" 
@@ -53,7 +65,7 @@
         <!-- City Dropdown -->
         <div class="form-group">
             <label for="city">Select City:</label>
-            <select id="city" formControlName="cityID">
+            <select id="city" formControlName="cityID" [disabled]="isReadOnly">
                 <option value="" disabled>Select City</option>
                 <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
             </select>
@@ -62,13 +74,23 @@
         <!-- Department Dropdown -->
         <div class="form-group">
             <label for="department">Select Department:</label>
-            <select id="department" formControlName="departmentID">
+            <select id="department" formControlName="departmentID" [disabled]="isReadOnly">
                 <option value="" disabled>Select Department</option>
                 <option *ngFor="let department of departments" [value]="department.id">{{ department.name }}</option>
             </select>
         </div>
-
+        <div>
+            <label for="department">Select Department:</label>
+            <select [disabled]="isReadOnly"  id="department1" formControlName="departmentID">
+                <option value="" disabled>Select Department</option>
+                <option *ngFor="let department of departments" [value]="department.id">{{ department.name }}</option>
+            </select>
+          </div>
+        <div>
+            <button *ngIf="isReadOnly"  type="submit">Edit</button>
+            <button *ngIf="!isReadOnly" [disabled]="userForm.invalid" type="submit">Save</button>
+        </div>
         <!-- Submit Button -->
-        <button type="submit" [disabled]="userForm.invalid">Submit</button>
+        <!-- <button type="submit" [disabled]="userForm.invalid">Submit</button> -->
     </form>
 </div>

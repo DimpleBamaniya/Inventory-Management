@@ -15,6 +15,9 @@ export class UserDetailComponent implements OnInit {
   departments: any = null;
   userDetails: any = null;
   userForm: FormGroup;
+  loginUserDetails: any = null;
+  dataForSave: any = null;
+  isReadOnly : boolean = true;
 
   constructor(
     private userService : UserService,
@@ -34,6 +37,10 @@ export class UserDetailComponent implements OnInit {
       });
     }
     ngOnInit(): void {
+      this.loginUserDetails = localStorage.getItem('loginUserDetails');
+      if(this.loginUserDetails == null){
+        this.router.navigateByUrl(`/login`);
+      }
       this.getAllCity();
       this.getAllDepartments();
       const userID = this._activeRoute.snapshot.paramMap.get('id');
@@ -68,20 +75,27 @@ export class UserDetailComponent implements OnInit {
           });
         }
         else{
-          this.router.navigateByUrl(`/dashbourd`);
+          this.router.navigateByUrl(`/userNotFound`);
         }
       });
     }
 
   onSubmit() {
     if (this.userForm.valid) {
-      console.log('Form Submitted:', this.userForm.value);
 
-      this.userService.saveUser(this.userForm.value).subscribe(userdetail => {
+      this.dataForSave = this.userForm.value;
+      if(this.dataForSave.id){
+        this.dataForSave.modifiedBy = (JSON.parse(this.loginUserDetails).id);
+      }
+      this.userService.saveUser(this.dataForSave).subscribe(userdetail => {
+        this.refreshPage();
       });
     } else {
       console.error('Form is invalid');
-
     }
+  }
+
+  refreshPage() {
+    window.location.reload();
   }
 }
