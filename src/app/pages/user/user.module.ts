@@ -1,10 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterLink, RouterModule, Routes } from '@angular/router';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { LayoutComponent } from '../layout/layout.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const routes: Routes = [
 {
@@ -18,8 +18,8 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [UserDetailComponent],
-  imports: [CommonModule,RouterModule.forChild(routes),LayoutComponent,ReactiveFormsModule],
+  declarations: [UserDetailComponent,UserListComponent],
+  imports: [CommonModule,RouterModule.forChild(routes),LayoutComponent,ReactiveFormsModule,FormsModule,LayoutComponent,RouterLink,CommonModule],
   exports:[],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

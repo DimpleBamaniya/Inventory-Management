@@ -9,9 +9,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-list',
-  standalone : true,
   templateUrl: './user-list.component.html',
-  imports: [FormsModule,LayoutComponent,RouterLink,CommonModule],
   styleUrl: './user-list.component.scss'
 })
 
@@ -20,7 +18,7 @@ export class UserListComponent {
   users: any[] = [];
   totalRecords: number = 0;
   currentPage: number = 1;
-  pageSize: number = 5;
+  pageSize: number = 50;
   searchString: string = '';
   userDetails: any = null;
   loginUserDetails: any = null;
