@@ -21,33 +21,34 @@
       <li class="nav-item">
         <a *ngIf="isShowUserListButton" class="nav-link" (click)="getUserList()">User List</a>
       </li>
-      <li class="nav-item dropdown" *ngIf="isShowProductButton">
+      <li class="nav-item" *ngIf="isShowProductButton">
+        <a *ngIf="isShowProductButton" class="nav-link"  [routerLink]="['/product/list/']">Product Management</a>
+      </li>
+      <!-- <li class="nav-item dropdown" >
         <a 
           id="ProductDetail" 
           class="nav-link dropdown-toggle" 
-          href="#" 
+          [routerLink]="['/product/list/']"
           role="button" 
-          data-bs-toggle="dropdown" 
           aria-expanded="false"
-        >
-          Product Management
+        >Product Management
         </a>
-        <ul class="dropdown-menu" aria-labelledby="ProductDetail">
+       <ul class="dropdown-menu" aria-labelledby="ProductDetail">
           <li>
             <a [routerLink]="['/product/detail/', 0]" class="dropdown-item" href="#">Product Detail</a>
           </li>
           <li>
-            <a [routerLink]="['/product/list/', 0]" class="dropdown-item" href="#">Product List</a>
+            <a [routerLink]="['/product/list/']" class="dropdown-item">Product List</a>
           </li>
           <li>
             <a [routerLink]="['/product/category/', 0]" class="dropdown-item" href="#">Add Product Category</a>
           </li>
-        </ul>
-      </li>
+        </ul> 
+      </li> -->
 
     </ul>
     <li class="d-flex">
-      <a class="nav-link" (click)="logout()">Logout</a>
+      <a class="nav-link" [routerLink]="['/logout']">Logout</a>
     </li>
   </div>
 </nav>

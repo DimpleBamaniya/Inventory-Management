@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { LogoutComponent } from '../logout/logout.component';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink,LogoutComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })

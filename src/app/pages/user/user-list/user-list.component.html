@@ -1,11 +1,11 @@
 <app-layout></app-layout>
 <div class="container">
-  <h1>User Details</h1>
+  <h1>User List</h1>
   <button [routerLink]="['/user/detail/', 0]"type="submit">Add User</button>
 
   <!-- Search Bar -->
   <div class="search-container">
-    <input type="text" [(ngModel)]="searchString" placeholder="Search by Name, City, or Department">
+    <input type="text" [(ngModel)]="searchString" placeholder="Search">
     <button (click)="searchUsers()">Search</button>
   </div>
 
@@ -13,11 +13,11 @@
   <table class="user-table">
     <thead>
       <tr>
-        <th>User Code</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>City</th>
-        <th>Department</th>
+        <th (click)="changeSortColumn('userCode')">User Code</th>
+        <th (click)="changeSortColumn('FirstName')">First Name</th>
+        <th (click)="changeSortColumn('LastName')">Last Name</th>
+        <th (click)="changeSortColumn('CityName')">City</th>
+        <th (click)="changeSortColumn('DepartmentName')">Department</th>
       </tr>
     </thead>
     <tbody>

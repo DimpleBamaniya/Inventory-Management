@@ -1,1 +1,45 @@
-<p>product-list works!</p>
+<app-layout></app-layout>
+<div class="container">
+  <h1>Product List</h1>
+  <button [routerLink]="['/product/detail/', 0]" type="submit">Add Product</button>
+
+  <!-- Search Bar -->
+  <div class="search-container">
+    <input type="text" [(ngModel)]="searchString" placeholder="Search">
+    <button (click)="searchUsers()">Search</button>
+  </div>
+
+  <!-- User Table -->
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th (click)="changeSortColumn('code')">Product Code</th>
+        <th (click)="changeSortColumn('categoryName')">Category Name</th>
+        <th (click)="changeSortColumn('brandName')">Brand Name</th>
+        <th (click)="changeSortColumn('availableQuantity')">Available Quantity</th>
+        <th (click)="changeSortColumn('useQuantity')">Used Quantity</th>
+        <th (click)="changeSortColumn('quantity')">Total Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>
+          <a [routerLink]="['/product/detail/', product.id]">{{ product.code }}</a>
+        </td>
+        <td>{{product.categoryName}}</td>
+        <td>{{product.brandName}}</td>
+        <td>{{product.availableQuantity}}</td>
+        <td>{{product.useQuantity}}</td>
+        <td>{{product.quantity}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }}</span>{{currentPage }}{{ pageSize }}{{ totalRecords}}
+    <br>{{currentPage * pageSize >= totalRecords}}
+    <button (click)="nextPage()" [disabled]="currentPage * pageSize >= totalRecords">Next</button>
+  </div>
+</div>

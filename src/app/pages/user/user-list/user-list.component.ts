@@ -39,16 +39,8 @@ export class UserListComponent {
       this.fetchUsers();
     }
 
-    fetchUsers() {
-      const pagination = {
-        SearchString: this.searchString,
-        PageNo: this.currentPage,
-        PageSize: this.pageSize,
-        SortColumn: 'ID',  // Default column to sort by
-        SortOrder: 'ASC'  // Default sorting order
-      };
-  
-      this.userService.getAllUser(pagination).subscribe(data => {
+    fetchUsers() { 
+      this.userService.getAllUser(this.pagingParams).subscribe(data => {
         this.users = data.data;
         console.log(this.users);
         this.totalRecords = this.users.length;
@@ -58,6 +50,7 @@ export class UserListComponent {
   
     searchUsers() {
       this.currentPage = 1; // Reset to first page on search
+      this.pagingParams.searchString = this.searchString;
       this.fetchUsers();
     }
   
@@ -75,17 +68,21 @@ export class UserListComponent {
       }
     }
 
-  // getAllUser(){
-  //   this.userService.getAllUser(this.pagingParams).subscribe(userdetail => {
-  //     this.userDetails = userdetail.data;
-  //     console.log(this.userDetails);
-  //   });
-  // }
+  changeSortColumn(column: any) {
+    if (this.pagingParams.sortOrder == 'ASC') {
+      this.pagingParams.sortOrder = 'DESC';
+    } else {
+      this.pagingParams.sortOrder = 'ASC';
+    }
+    this.pagingParams.sortColumn  = column;
+    this.fetchUsers();
+
+  }
 
    private initializePagination(): void {
       this.pagingParams = new BasicPagingParams();
       this.pagingParams.searchString = '';
-      this.pagingParams.sortColumn = 'accountNumber';
+      this.pagingParams.sortColumn = 'ID';
       this.pagingParams.sortOrder = 'ASC';
       this.pagingParams.pageNo = 1;
       this.pagingParams.pageSize = 10;

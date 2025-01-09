@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   isLoginUser: boolean = false;
   loginUserDetails : any;
   loginForm : FormGroup;
+  isSubmitted : boolean = false;
 
   constructor(
     private http: HttpClient, 
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
     private _activeRoute: ActivatedRoute
   ) { 
     this.loginForm = this._formBuilder.group({
-      emailID: ['', Validators.compose([Validators.required])],
+      emailID: ['', Validators.compose([Validators.required,Validators.email])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
     });
   }
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
   }
  
   onLogin() {
+    this.isSubmitted =  true;
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -56,9 +58,8 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl(`/user/detail/${this.loginUserDetails.id}`);
         }
       } else {
-        alert(res.message);
+        alert(res.message,);
       }
-
     });
   }
 

@@ -13,7 +13,11 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
-    }, 
+    },
+    {
+        path: 'logout',
+        component: LogoutComponent
+    },
     {
         path: 'userNotFound',
         component: UserNotFoundComponent
@@ -23,14 +27,8 @@ export const routes: Routes = [
         loadChildren: () => import('../app/pages/user/user.module').then(m => m.UserModule),
     },
     {
-        path: '',
-        component: LayoutComponent,
-        children: [
-            {
-                path: 'logout',
-                component: LogoutComponent
-            },
-        ]
+        path: 'product',
+        loadChildren: () => import('../app/pages/product/product.module').then(m => m.ProductModule),
     },
     {
         path: '**',
