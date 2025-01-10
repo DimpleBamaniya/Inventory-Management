@@ -19,7 +19,13 @@ export const routes: Routes = [
 
 @NgModule({
   declarations: [UserDetailComponent,UserListComponent],
-  imports: [CommonModule,RouterModule.forChild(routes),LayoutComponent,ReactiveFormsModule,FormsModule,LayoutComponent,RouterLink,CommonModule],
+  imports: [CommonModule,
+    RouterModule.forChild(routes),
+    LayoutComponent,
+    ReactiveFormsModule,
+    FormsModule,
+    LayoutComponent,
+    RouterLink],
   exports:[],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

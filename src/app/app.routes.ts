@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { LogoutComponent } from './pages/logout/logout.component';
-import { LayoutComponent } from './pages/layout/layout.component';
 import { UserNotFoundComponent } from './pages/user/user-not-found/user-not-found.component';
+import { DynamicTableDataDialogComponent } from './core/dynamic-table-data-dialog/dynamic-table-data-dialog.component';
 
 export const routes: Routes = [
     {
@@ -21,7 +21,11 @@ export const routes: Routes = [
     {
         path: 'userNotFound',
         component: UserNotFoundComponent
-    }, 
+    },
+    {
+        path: 'dynamicTable',
+        component: DynamicTableDataDialogComponent
+    },
     {
         path: 'user',
         loadChildren: () => import('../app/pages/user/user.module').then(m => m.UserModule),

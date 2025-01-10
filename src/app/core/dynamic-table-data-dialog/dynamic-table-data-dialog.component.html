@@ -1,0 +1,23 @@
+<div class="dialog-container">
+    <div class="button-container">
+        <button class="buttonColor"(click)="closeDialog()">X</button> <!-- Close button-->
+    </div>
+    <h2>{{ data.dialogLabel }}</h2> <!-- Display dynamic label -->
+
+    <table class="dynamic-table">
+        <thead>
+            <tr>
+                <th *ngFor="let column of this.tableDataColumn">{{ column }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let column of tableDatalist">
+                <td>{{ column.id }}</td>
+                <td>{{ column.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="button-container">
+        <button class="buttons" (click)="closeDialog()">OK</button> <!-- OK button -->
+    </div>
+</div>

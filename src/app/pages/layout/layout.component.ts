@@ -13,7 +13,7 @@ import { LogoutComponent } from '../logout/logout.component';
 export class LayoutComponent implements OnInit {
 
   ispermission: boolean = false;
-  isShowProductButton : boolean = false;
+  isShowProduct : boolean = false;
   isShowUserListButton: boolean = false;
   loginUserDetails: any = null;
   constructor(private router: Router,private _activeRoute: ActivatedRoute,) { }
@@ -26,8 +26,8 @@ export class LayoutComponent implements OnInit {
     } else {
       this.ispermission = false;
     }
-    this.showUserList();
-    this.showProductButton();
+    this.isShowUserList();
+    this.isShowProductButton();
   }
 
   logout(): void {
@@ -48,21 +48,22 @@ export class LayoutComponent implements OnInit {
     this.router.navigateByUrl('/login');
   }
 
-  getUserList(): void {
-      // Navigate to the login page
-      this.router.navigateByUrl('/user/list');
-  }
-
-  showUserList(): void {
+  isShowUserList(): void {
     const userID = this._activeRoute.snapshot.paramMap.get('id');
     if(this.router.url == ('/user/detail/'+ userID) && this.ispermission){
       this.isShowUserListButton = true;
+    }else if(this.router.url == ('/product/list') && this.ispermission){
+      this.isShowUserListButton = true;
+    }else{
+      this.isShowUserListButton = false;
     }
   }
 
-  showProductButton(): void {
-    if(this.ispermission && this.router.url != '/userNotFound'){
-      this.isShowProductButton = true;
+  isShowProductButton(): void {
+    if (this.router.url == ('/product/list') && this.ispermission) {
+      this.isShowProduct = false;
+    } else if (this.ispermission && this.router.url != '/userNotFound') {
+      this.isShowProduct = true;
     }
   }
 

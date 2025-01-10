@@ -21,15 +21,22 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users">
-        <td>
-          <a [routerLink]="['/user/detail/', user.id]">{{ user.userCode }}</a>
-        </td>
-        <td>{{user.firstName}}</td>
-        <td>{{user.lastName}}</td>
-        <td>{{user.cityName}}</td>
-        <td>{{user.departmentName}}</td>
-      </tr>
+      <ng-container *ngIf="!isNoRecordFound">
+        <tr *ngFor="let user of users">
+          <td>
+            <a [routerLink]="['/user/detail/', user.id]">{{ user.userCode }}</a>
+          </td>
+          <td>{{user.firstName}}</td>
+          <td>{{user.lastName}}</td>
+          <td>{{user.cityName}}</td>
+          <td>{{user.departmentName}}</td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="isNoRecordFound">
+        <tr>
+          <td colspan="5" class="table-no-record text-center">No records found</td>
+        </tr>
+      </ng-container>
     </tbody>
   </table>
 

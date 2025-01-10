@@ -22,11 +22,10 @@ interface Result {
 })
 
 export class UserService {
+  constructor(private http: HttpClient) { }
+  
   // Set up the Web API URL (can be stored in environment file)
   private apiUrl = "http://localhost:5062/api/User";  // Adjust according to your API base URL
-
-  constructor(private http: HttpClient) { }
-
   // Method to authenticate user via Web API
   login(user: any): Observable<any> {
     return this.http.post<any>(this.apiUrl + "/GetUserDetailByEmailID", user);  // Make the POST request and return the observable

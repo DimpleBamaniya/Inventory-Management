@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user.service';
 import { BasicPagingParams } from '../../../core/sharedModels/paging-params.model';
-import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { LayoutComponent } from '../../layout/layout.component';
-import { Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -22,6 +18,7 @@ export class UserListComponent {
   searchString: string = '';
   userDetails: any = null;
   loginUserDetails: any = null;
+  isNoRecordFound : boolean = false;
 
   // pagination
   pagingParams!: BasicPagingParams;
@@ -44,6 +41,12 @@ export class UserListComponent {
         this.users = data.data;
         console.log(this.users);
         this.totalRecords = this.users.length;
+        if(this.totalRecords == 0){
+          this.isNoRecordFound = true;
+        }
+        else{
+          this.isNoRecordFound = false;
+        }
         console.log(this.totalRecords);
       });
     }
