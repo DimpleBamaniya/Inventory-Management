@@ -11,10 +11,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 
 export const routes: Routes = [
-{
-    path: 'detail/:id',
-    component: ProductDetailComponent
-},
+// {
+//     path: 'detail/:id',
+//     component: ProductDetailComponent
+// },
 {
     path: 'list',
     component: ProductListComponent
@@ -22,7 +22,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ProductDetailComponent,ProductListComponent],
+  declarations: [ProductListComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

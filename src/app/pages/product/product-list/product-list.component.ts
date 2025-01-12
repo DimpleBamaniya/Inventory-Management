@@ -6,6 +6,7 @@ import { ProductCategoryService } from '../../product-category/product-category.
 import { MatDialog } from '@angular/material/dialog';
 import { DynamicTableDataDialogComponent } from '../../../core/dynamic-table-data-dialog/dynamic-table-data-dialog.component';
 import { ProductBrandService } from '../../product-brand/product-brand.service';
+import { ProductDetailComponent } from '../product-detail/product-detail.component';
 
 @Component({
   selector: 'app-product-list',
@@ -50,7 +51,7 @@ export class ProductListComponent {
   }
 
   fetchUsers() {
-    this.productService.getAllUser(this.pagingParams).subscribe(data => {
+    this.productService.getAllProduct(this.pagingParams).subscribe(data => {
       this.products = data.data;
       console.log(this.products);
       this.totalRecords = this.products.length;
@@ -118,6 +119,20 @@ export class ProductListComponent {
     });
   }
 
+  openDialogForAddProduct(product:any){
+    const dialogRef = this.dialog.open(ProductDetailComponent, {
+      data: {
+        tableData: product, // Passing dynamic data (categoriesResponse)
+      },
+      width: '500px',
+    });
+
+    // After dialog closes, navigate back to the product list
+    dialogRef.afterClosed().subscribe(() => {
+      this.refreshPage();
+    });
+  }
+
   openCategoryDialog(): void {
     this.columns = ['ID', 'Product Category']
       const dialogRef = this.dialog.open(DynamicTableDataDialogComponent, {
@@ -149,6 +164,38 @@ export class ProductListComponent {
     // After dialog closes, navigate back to the product list
     dialogRef.afterClosed().subscribe(() => {
       this.router.navigateByUrl('/product/list');
+    });
+  }
+
+  refreshPage() {
+    window.location.reload();
+  }
+
+  deleteProduct(product: any){
+    this.productService.deleteProduct(product.id).subscribe(user => {
+      if(user.data.length >=1){
+        var userList = user.data;
+        this.columns = ['ID', 'User']
+    const dialogRef = this.dialog.open(DynamicTableDataDialogComponent, {
+      data: {
+        columns: this.columns, // Passing dynamic column names
+        tableData: userList, // Passing dynamic data (categoriesResponse)
+        dialogLabel: 'User List', // Passing dynamic label
+        label: "You can't delete because this product is used for following Users"
+      },
+      width: '500px',
+    });
+
+    // After dialog closes, navigate back to the product list
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigateByUrl('/product/list');
+    });
+      }
+      else{
+        this.productService.deleteProduct(product.id).subscribe(isDeleted => {
+        this.refreshPage();
+        });
+      }
     });
   }
 

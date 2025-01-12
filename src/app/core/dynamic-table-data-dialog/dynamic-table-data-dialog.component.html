@@ -3,6 +3,7 @@
         <button class="buttonColor"(click)="closeDialog()">X</button> <!-- Close button-->
     </div>
     <h2>{{ data.dialogLabel }}</h2> <!-- Display dynamic label -->
+    <h6 *ngIf="data.label">{{data.label}}</h6>
 
     <table class="dynamic-table">
         <thead>

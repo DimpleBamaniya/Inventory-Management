@@ -10,6 +10,7 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './dynamic-table-data-dialog.component.html',
   styleUrls: ['./dynamic-table-data-dialog.component.scss'],
 })
+
 export class DynamicTableDataDialogComponent {
   tableDatalist: any;
   tableDataColumn: any;

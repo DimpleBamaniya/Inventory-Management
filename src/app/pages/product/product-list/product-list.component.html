@@ -1,6 +1,6 @@
 <app-layout></app-layout>
 <div class="container">
-  <button [routerLink]="['/product/detail/', 0]" type="submit">Add Product</button>
+  <button (click)="openDialogForAddProduct(0)">Add Product</button>
 
   <h1>Product List</h1>
 
@@ -20,24 +20,28 @@
         <th (click)="changeSortColumn('availableQuantity')">Available Quantity</th>
         <th (click)="changeSortColumn('useQuantity')">Used Quantity</th>
         <th (click)="changeSortColumn('quantity')">Total Quantity</th>
+        <th>Action</th>
+
       </tr>
     </thead>
     <tbody>
       <ng-container *ngIf="!isNoRecordFound">
         <tr *ngFor="let product of products">
-          <td>
-            <a [routerLink]="['/product/detail/', product.id]">{{ product.code }}</a>
-          </td>
+          <td>{{ product.code }}</td>
           <td>{{ product.categoryName }}</td>
           <td>{{ product.brandName }}</td>
           <td>{{ product.availableQuantity }}</td>
           <td>{{ product.useQuantity }}</td>
           <td>{{ product.quantity }}</td>
+          <td>
+            <button (click)="openDialogForAddProduct(product)">edit</button>
+            <button (click)="deleteProduct(product)">delete</button>
+          </td>
         </tr>
       </ng-container>
       <ng-container *ngIf="isNoRecordFound">
         <tr>
-          <td colspan="6" class="table-no-record text-center">No records found</td>
+          <td colspan="7" class="table-no-record text-center">No records found</td>
         </tr>
       </ng-container>
     </tbody>

@@ -16,6 +16,7 @@ export class LayoutComponent implements OnInit {
   isShowProduct : boolean = false;
   isShowUserListButton: boolean = false;
   loginUserDetails: any = null;
+  loggedInUserName: string = '';
   constructor(private router: Router,private _activeRoute: ActivatedRoute,) { }
 
   ngOnInit(): void  {
@@ -25,6 +26,9 @@ export class LayoutComponent implements OnInit {
       this.ispermission = true;
     } else {
       this.ispermission = false;
+    }
+    if(this.loginUserDetails != null){
+      this.loggedInUserName= JSON.parse(this.loginUserDetails).firstName;
     }
     this.isShowUserList();
     this.isShowProductButton();

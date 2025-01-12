@@ -25,6 +25,9 @@
         <a *ngIf="isShowUserListButton" class="nav-link"  [routerLink]="['/user/list/']">User Management</a>
       </li>
       </ul>
+      <li class="d-flex">
+        Welcome {{loggedInUserName}}!!!
+      </li>
     <li class="d-flex">
       <a class="nav-link" [routerLink]="['/logout']">Logout</a>
     </li>

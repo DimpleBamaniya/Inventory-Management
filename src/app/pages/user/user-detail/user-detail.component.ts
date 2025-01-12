@@ -4,6 +4,7 @@ import { DepartmentService } from '../../department/department.service';
 import { UserService } from '../user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserProductService } from '../../user-product/user-product.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -22,6 +23,7 @@ export class UserDetailComponent implements OnInit {
   isSubmited: boolean = false;
   labelForAddUser: string = '';
   labelForEditUser: string = '';
+  userProductDetail: any = null;
 
   constructor(
     private userService: UserService,
@@ -29,7 +31,8 @@ export class UserDetailComponent implements OnInit {
     private departmentService: DepartmentService,
     private fb: FormBuilder,
     private _activeRoute: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+  private userProductService: UserProductService) {
     this.userForm = this.fb.group({
       id: [""],
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
@@ -47,9 +50,11 @@ export class UserDetailComponent implements OnInit {
     if (this.loginUserDetails == null) {
       this.router.navigateByUrl(`/login`);
     }
+
     this.getAllCity();
     this.getAllDepartments();
     const userID = this._activeRoute.snapshot.paramMap.get('id');
+    this.getProductListbyUserID(userID);
     this.getUserDetails(userID)
       .then((userDetails) => {
         if (userDetails == null) {
@@ -70,7 +75,6 @@ export class UserDetailComponent implements OnInit {
       .catch((error) => {
         console.error('Error loading user details:', error);
       });
-    // this.userForm.patchValue(this.userDetails);
 
   }
 
@@ -159,8 +163,12 @@ export class UserDetailComponent implements OnInit {
 
   OnChangeEdit() {
     this.isReadOnly = false;
+    if(!(JSON.parse(this.loginUserDetails).permissions)){
+      this.userForm.controls['departmentID'].disable();
+    }else{
+      this.userForm.controls['departmentID'].enable();
+    }
     this.userForm.controls['cityID'].enable();
-    this.userForm.controls['departmentID'].enable();
   }
 
   // Getter methods for form controls to simplify validation logic in the template
@@ -184,5 +192,11 @@ export class UserDetailComponent implements OnInit {
   }
   get cityID() {
     return this.userForm.get('cityID');
+  }
+
+  getProductListbyUserID(userID : any){
+    this.userProductService.getProductListbyUserID(userID).subscribe(userdetail => {
+    this.userProductDetail = userdetail.data;
+    });
   }
 }

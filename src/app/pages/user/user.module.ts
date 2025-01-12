@@ -24,7 +24,6 @@ export const routes: Routes = [
     LayoutComponent,
     ReactiveFormsModule,
     FormsModule,
-    LayoutComponent,
     RouterLink],
   exports:[],
   providers: [],
