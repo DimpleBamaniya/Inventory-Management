@@ -1,7 +1,7 @@
 <app-layout></app-layout>
 <div class="container">
   <h1>User List</h1>
-  <button [routerLink]="['/user/detail/', 0]"type="submit">Add User</button>
+  <button [routerLink]="['/user/detail/', 0]" type="submit">Add User</button>
 
   <!-- Search Bar -->
   <div class="search-container">
@@ -18,6 +18,7 @@
         <th (click)="changeSortColumn('LastName')">Last Name</th>
         <th (click)="changeSortColumn('CityName')">City</th>
         <th (click)="changeSortColumn('DepartmentName')">Department</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -30,21 +31,14 @@
           <td>{{user.lastName}}</td>
           <td>{{user.cityName}}</td>
           <td>{{user.departmentName}}</td>
+          <td><button type="button" (click)="DeleteUser(user.id)">Delete</button></td>
         </tr>
       </ng-container>
       <ng-container *ngIf="isNoRecordFound">
         <tr>
-          <td colspan="5" class="table-no-record text-center">No records found</td>
+          <td colspan="6" class="table-no-record text-center">No records found</td>
         </tr>
       </ng-container>
     </tbody>
   </table>
-
-  <!-- Pagination -->
-  <div class="pagination">
-    <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
-    <span>Page {{ currentPage }}</span>{{currentPage }}{{ pageSize }}{{ totalRecords}}
-    <br>{{currentPage * pageSize >= totalRecords}}
-    <button (click)="nextPage()" [disabled]="currentPage * pageSize >= totalRecords">Next</button>
-  </div>
 </div>

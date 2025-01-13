@@ -1,79 +1,152 @@
-$primary-color: #007BFF;
-$background-color: #f9f9f9;
-$border-color: #ccc;
-$font-family: Arial, sans-serif;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
 
-body {
-  font-family: $font-family;
-  margin: 0;
-  padding: 0;
-  background-color: $background-color;
-}
+  .form-container,
+  .table-container {
+    flex: 1 1 calc(50% - 1rem);
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 
-.form-container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  border: 1px solid $border-color;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+    h1,
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
+    .form-group {
+      margin-bottom: 1rem;
 
-.form-group {
-  margin-bottom: 15px;
-}
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
 
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
+      input,
+      select {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
 
-input, select {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid $border-color;
-  border-radius: 4px;
-}
+      .error {
+        color: #d9534f;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+      }
+    }
 
-select {
-  appearance: none;
-  background-color: #fff;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' d='M0 0h20v20H0z'/%3E%3Cpath d='M5.7 7.3a1 1 0 011.4 0L10 10.2l2.9-2.9a1 1 0 011.4 1.4l-3.6 3.6a1 1 0 01-1.4 0L5.7 8.7a1 1 0 010-1.4z' fill='%23999'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-}
+    .button-container {
+      display: flex;
+      gap: 1rem;
 
-button {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  background-color: $primary-color;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+      button {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
 
-button:hover {
-  background-color: darken($primary-color, 10%);
-}
+        &:hover {
+          background-color: #007bff;
+          color: #fff;
+        }
 
-select:disabled {
-  background-color: #f9f9f9;
-  border: 1px solid gray;
-  color: #b5b5b5;
-}
+        &[type='button'] {
+          background-color: #f0ad4e;
+        }
 
-.error {
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
+        &[type='submit'] {
+          background-color: #5cb85c;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .dynamic-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+    }
+
+    tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .delete-btn {
+      background-color: #d9534f;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      &:hover {
+        background-color: #c9302c;
+      }
+    }
+  }
+
+  .table-container {
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #333;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 1rem;
+
+      .add-product-btn {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #45a049;
+        }
+      }
+    }
+        
+    .table-no-record {
+      text-align: center;
+      padding: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #555;
+    }
+  }
 }

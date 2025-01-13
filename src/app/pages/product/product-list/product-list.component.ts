@@ -26,17 +26,17 @@ export class ProductListComponent {
   productCategories: any = null;
   productBrands: any = null;
 
-  columns:any = null; // Dynamic columns to be passed to the dialog
+  columns: any = null; // Dynamic columns to be passed to the dialog
 
   // pagination
   pagingParams!: BasicPagingParams;
 
   constructor(
     private productService: ProductService,
-     public dialog: MatDialog,
+    public dialog: MatDialog,
     private router: Router,
-    private productCategoryService : ProductCategoryService,
-    private productBrandService : ProductBrandService
+    private productCategoryService: ProductCategoryService,
+    private productBrandService: ProductBrandService
   ) {
     this.initializePagination();
   }
@@ -69,20 +69,6 @@ export class ProductListComponent {
     this.currentPage = 1; // Reset to first page on search
     this.pagingParams.searchString = this.searchString;
     this.fetchUsers();
-  }
-
-  nextPage() {
-    if ((this.currentPage * this.pageSize) < this.totalRecords) {
-      this.currentPage++;
-      this.fetchUsers();
-    }
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.fetchUsers();
-    }
   }
 
   changeSortColumn(column: any) {
@@ -119,7 +105,7 @@ export class ProductListComponent {
     });
   }
 
-  openDialogForAddProduct(product:any){
+  openDialogForAddProduct(product: any) {
     const dialogRef = this.dialog.open(ProductDetailComponent, {
       data: {
         tableData: product, // Passing dynamic data (categoriesResponse)
@@ -135,7 +121,7 @@ export class ProductListComponent {
 
   openCategoryDialog(): void {
     this.columns = ['ID', 'Product Category']
-      const dialogRef = this.dialog.open(DynamicTableDataDialogComponent, {
+    const dialogRef = this.dialog.open(DynamicTableDataDialogComponent, {
       data: {
         columns: this.columns, // Passing dynamic column names
         tableData: this.productCategories, // Passing dynamic data (categoriesResponse)
@@ -171,29 +157,29 @@ export class ProductListComponent {
     window.location.reload();
   }
 
-  deleteProduct(product: any){
-    this.productService.deleteProduct(product.id).subscribe(user => {
-      if(user.data.length >=1){
+  deleteProduct(product: any) {
+    this.productService.getUserListByProductID(product.id).subscribe(user => {
+      if (user.data.length >= 1) {
         var userList = user.data;
         this.columns = ['ID', 'User']
-    const dialogRef = this.dialog.open(DynamicTableDataDialogComponent, {
-      data: {
-        columns: this.columns, // Passing dynamic column names
-        tableData: userList, // Passing dynamic data (categoriesResponse)
-        dialogLabel: 'User List', // Passing dynamic label
-        label: "You can't delete because this product is used for following Users"
-      },
-      width: '500px',
-    });
+        const dialogRef = this.dialog.open(DynamicTableDataDialogComponent, {
+          data: {
+            columns: this.columns, // Passing dynamic column names
+            tableData: userList, // Passing dynamic data (categoriesResponse)
+            dialogLabel: 'User List', // Passing dynamic label
+            label: "You can't delete because this product is used for following Users"
+          },
+          width: '500px',
+        });
 
-    // After dialog closes, navigate back to the product list
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigateByUrl('/product/list');
-    });
+        // After dialog closes, navigate back to the product list
+        dialogRef.afterClosed().subscribe(() => {
+          this.router.navigateByUrl('/product/list');
+        });
       }
-      else{
+      else {
         this.productService.deleteProduct(product.id).subscribe(isDeleted => {
-        this.refreshPage();
+          this.refreshPage();
         });
       }
     });

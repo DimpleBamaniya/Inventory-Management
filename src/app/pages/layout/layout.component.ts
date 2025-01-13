@@ -27,6 +27,7 @@ export class LayoutComponent implements OnInit {
     } else {
       this.ispermission = false;
     }
+
     if(this.loginUserDetails != null){
       this.loggedInUserName= JSON.parse(this.loginUserDetails).firstName;
     }

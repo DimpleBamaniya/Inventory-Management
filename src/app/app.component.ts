@@ -1,7 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule } from '@angular/material/icon';
 import { UserModule } from './pages/user/user.module';
 import { ProductModule } from './pages/product/product.module';
 import { CommonModule } from '@angular/common';

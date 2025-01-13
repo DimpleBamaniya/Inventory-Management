@@ -23,10 +23,6 @@ export const routes: Routes = [
         component: UserNotFoundComponent
     },
     {
-        path: 'dynamicTable',
-        component: DynamicTableDataDialogComponent
-    },
-    {
         path: 'user',
         loadChildren: () => import('../app/pages/user/user.module').then(m => m.UserModule),
     },

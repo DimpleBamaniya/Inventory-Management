@@ -13,6 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ProductService } from '../product.service';
+import { UserProductService } from '../../user-product/user-product.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -29,8 +30,8 @@ export class ProductDetailComponent {
   productBrands: any = null;
   productForm: FormGroup;
   dataForSave: any = null;
-  loginUserDetails :any = null;
-
+  loginUserDetails: any = null;
+  isAddFromUserDetail: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ProductDetailComponent>,
@@ -38,6 +39,7 @@ export class ProductDetailComponent {
     private productCategoryService: ProductCategoryService,
     private productBrandService: ProductBrandService,
     private productService: ProductService,
+    private userProductService: UserProductService,
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any // Inject the dynamic data and columns
   ) {
@@ -56,24 +58,28 @@ export class ProductDetailComponent {
       this.router.navigateByUrl(`/login`);
     }
     if (this.data.tableData != null && this.data.tableData != 0) {
-      this.dialogLabel = 'Edit Product Stock';
-      this.productForm.patchValue({
-        id: this.data.tableData.id ? this.data.tableData.id : '',
-        brandID: this.data.tableData.brandID ? this.data.tableData.brandID : '',
-        categoryID: this.data.tableData.categoryID
-          ? this.data.tableData.categoryID
-          : '',
-        quantity: this.data.tableData.quantity
-          ? this.data.tableData.quantity
-          : null,
-      });
-      this.productForm.controls['brandID'].disable();
-      this.productForm.controls['categoryID'].disable();
-    }else{
+      if (this.data.tableData.isAddFromUserDetail) {
+        this.isAddFromUserDetail = this.data.tableData.isAddFromUserDetail;
+      } else {
+        this.dialogLabel = 'Edit Product Stock';
+        this.productForm.patchValue({
+          id: this.data.tableData.id ? this.data.tableData.id : '',
+          brandID: this.data.tableData.brandID ? this.data.tableData.brandID : '',
+          categoryID: this.data.tableData.categoryID
+            ? this.data.tableData.categoryID
+            : '',
+          quantity: this.data.tableData.quantity
+            ? this.data.tableData.quantity
+            : null,
+        });
+        this.productForm.controls['brandID'].disable();
+        this.productForm.controls['categoryID'].disable();
+      }
+    } else {
       this.productForm.controls['brandID'].enable();
       this.productForm.controls['categoryID'].enable();
     }
- 
+
     this.getAllProductCategories();
     this.getAllProductBrands();
   }
@@ -106,7 +112,7 @@ export class ProductDetailComponent {
     if (this.productForm.valid) {
       this.dataForSave = this.productForm.value;
       if (this.dataForSave.id != null && this.dataForSave.id != 0) {
-        this.dataForSave.categoryID  = this.productForm.controls['categoryID'].value;
+        this.dataForSave.categoryID = this.productForm.controls['categoryID'].value;
         this.dataForSave.brandID = this.productForm.controls['brandID'].value;
         this.dataForSave.modifiedBy = (JSON.parse(this.loginUserDetails).id);
       }
@@ -114,9 +120,18 @@ export class ProductDetailComponent {
         this.dataForSave.id = 0;
         this.dataForSave.createdBy = (JSON.parse(this.loginUserDetails).id);
       }
-      this.productService.saveProduct(this.dataForSave).subscribe(productdetail => {
-        this.dialogRef.close();
-      })
+      if (this.isAddFromUserDetail) {
+        this.dataForSave.id = this.data.tableData.userID;
+        this.dataForSave.createdBy = (JSON.parse(this.loginUserDetails).id);
+        this.userProductService.saveUserProducts(this.dataForSave).subscribe(productdetail => {
+          this.dialogRef.close();
+        });
+        console.log(this.dataForSave);
+      } else {
+        this.productService.saveProduct(this.dataForSave).subscribe(productdetail => {
+          this.dialogRef.close();
+        });
+      }
     }
   }
 }

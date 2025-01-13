@@ -47,4 +47,10 @@ export class UserService {
     return this.http.post<any>(`${this.apiUrl}/GetAllUserDetails`, pagination);  
   }
 
+   // Method to authenticate user via Web API
+   DeleteUser(userDetails: any): Observable<any> {
+    let params = { 'id': userDetails.userId ,'DeletedBy': userDetails.deletedBy};
+    return this.http.post<any>(`${this.apiUrl}/DeleteUser`, params);  // Make the POST request and return the observable
+  }
+
 }
