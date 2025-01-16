@@ -148,8 +148,8 @@ export class UserDetailComponent implements OnInit {
               lastName: '',
               emailID: '',
               password: '',
-              cityID: '',
-              departmentID: '',
+              cityID: null,
+              departmentID: null,
             });
             resolve();
           }
@@ -167,6 +167,9 @@ export class UserDetailComponent implements OnInit {
 
   onSubmit() {
     this.isSubmited = true;
+    // this.userForm.patchValue({
+
+    // });
 
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();

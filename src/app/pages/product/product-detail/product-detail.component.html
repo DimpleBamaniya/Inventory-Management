@@ -9,7 +9,7 @@
                 <option *ngFor="let category of productCategories" [value]="category.id">{{ category.name }}</option>
             </select>
             <div *ngIf="productForm.get('categoryID')?.invalid && productForm.get('categoryID')?.touched" class="error">
-                <div *ngIf="productForm.get('categoryID')?.errors?.['required']">Category is required.</div>
+                <div *ngIf="productForm.get('categoryID')?.errors?.['required']" class="error">Category is required.</div>
             </div>
         </div>
         <div class="form-group">
@@ -20,12 +20,12 @@
                 <option *ngFor="let brand of productBrands" [value]="brand.id">{{ brand.name }}</option>
             </select>
             <div *ngIf="productForm.get('brandID')?.invalid && productForm.get('brandID')?.touched" class="error">
-                <div *ngIf="productForm.get('brandID')?.errors?.['required']">Brand is required.</div>
+                <div *ngIf="productForm.get('brandID')?.errors?.['required']" class="error">Brand is required.</div>
             </div>
         </div>
         <div class="form-group" *ngIf="!(isAddFromUserDetail)">
             <label for="quantity">Quantity:</label>
-            <input type="text" id="quantity" formControlName="quantity" placeholder="Enter product stock" required>
+            <input type="text" id="quantity" formControlName="quantity" placeholder="Enter product stock">
         </div>
 
         <div>

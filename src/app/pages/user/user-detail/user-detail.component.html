@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label for="firstName">First Name:</label>
                 <input [readonly]="isReadOnly" type="text" id="firstName" formControlName="firstName"
-                    placeholder="Enter your first name" required />
+                    placeholder="Enter your first name" />
                 <div *ngIf="firstName?.invalid && firstName?.touched && isSubmited" class="error">
                     <div *ngIf="firstName?.errors?.['required']">First Name is required.</div>
                     <div *ngIf="firstName?.errors?.['minlength']">First Name must be more than 2 characters.</div>
@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label for="lastName">Last Name:</label>
                 <input [readonly]="isReadOnly" type="text" id="lastName" formControlName="lastName"
-                    placeholder="Enter your last name" required>
+                    placeholder="Enter your last name">
                 <div *ngIf="lastName?.invalid && lastName?.touched && isSubmited" class="error">
                     <div *ngIf="lastName?.errors?.['required']">Last Name is required.</div>
                     <div *ngIf="lastName?.errors?.['minlength']">Last Name must be more than 2 characters.</div>
@@ -32,7 +32,7 @@
             <div class="form-group" *ngIf="!isUpdateForm">
                 <label for="email">Email ID:</label>
                 <input [readonly]="isReadOnly" type="email" id="email" formControlName="emailID"
-                    placeholder="Enter your email" required>
+                    placeholder="Enter your email">
                 <div *ngIf="emailID?.invalid && emailID?.touched && isSubmited" class="error">
                     <div *ngIf="emailID?.errors?.['required']">Email is required.</div>
                     <div *ngIf="emailID?.errors?.['email']">Invalid email format.</div>
@@ -43,7 +43,7 @@
             <div class="form-group" *ngIf="!isUpdateForm">
                 <label for="password">Password:</label>
                 <input [readonly]="isReadOnly" type="password" id="password" formControlName="password"
-                    placeholder="Enter your password" required>
+                    placeholder="Enter your password">
                 <div *ngIf="password?.invalid && password?.touched && isSubmited" class="error">
                     <div *ngIf="password?.errors?.['required']">Password is required.</div>
                     <div *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters long.</div>
