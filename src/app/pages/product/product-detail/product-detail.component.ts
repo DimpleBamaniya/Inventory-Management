@@ -86,21 +86,21 @@ export class ProductDetailComponent {
 
   // Close the dialog and redirect to ProductListComponent
   closeDialog(): void {
-    this.dialogRef.close();
-    this.router.navigateByUrl('/product/list');
+    let param = {
+      isClosePopUp : true
+    }
+    this.dialogRef.close(param);
   }
 
   getAllProductCategories() {
     this.productCategoryService.getAllProductCategories().subscribe((pc) => {
       this.productCategories = pc;
-      console.log(this.productCategories);
     });
   }
 
   getAllProductBrands() {
     this.productBrandService.getAllProductBrands().subscribe((pb) => {
       this.productBrands = pb;
-      console.log(this.productBrands);
     });
   }
 
@@ -123,15 +123,16 @@ export class ProductDetailComponent {
       if (this.isAddFromUserDetail) {
         this.dataForSave.id = this.data.tableData.userID;
         this.dataForSave.createdBy = (JSON.parse(this.loginUserDetails).id);
+
         this.userProductService.saveUserProducts(this.dataForSave).subscribe(productdetail => {
-          this.dialogRef.close();
+          this.dialogRef.close(productdetail);
         });
-        console.log(this.dataForSave);
       } else {
         this.productService.saveProduct(this.dataForSave).subscribe(productdetail => {
-          this.dialogRef.close();
+          this.dialogRef.close(productdetail);
         });
       }
     }
   }
+
 }

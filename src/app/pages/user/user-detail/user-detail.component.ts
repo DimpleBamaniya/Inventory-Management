@@ -186,8 +186,10 @@ export class UserDetailComponent implements OnInit {
 
       this.userService.saveUser(this.dataForSave).subscribe(userdetail => {
         if (this.isUpdateForm) {
+          alert("User updated successfully.")
           this.refreshPage();
         } else {
+          alert("User added successfully.")
           this.router.navigateByUrl('/user/list');
         }
       });
@@ -258,14 +260,19 @@ export class UserDetailComponent implements OnInit {
     });
 
     // After dialog closes, navigate back to the product list
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed().subscribe((res) => {
+      if(res.data == null || res.data == undefined){
+        alert(res.message);
+      }else{
+        alert("Product added successfully.");
+      }
       this.refreshPage();
     });
   }
 
   onDeleteProduct(userProductID: any) {
     this.userProductService.deleteUserProduct(userProductID).subscribe(isDeleted => {
-      console.log(isDeleted);
+      alert("Product deleted successfully.")
       this.refreshPage();
     });
   }

@@ -1,35 +1,49 @@
-<div class="dialog-container">
-    <h2>{{ dialogLabel }}</h2>
-    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+<div class="dialog-background">
+    <div class="dialog-container">
+      <div class="dialog-header">
+        <h2>{{ dialogLabel }}</h2>
+        <button class="button-close" (click)="closeDialog()">X</button>
+      </div>
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <!-- Category Dropdown -->
-            <label for="categoryID">Category:</label>
-            <select id="categoryID" formControlName="categoryID">
-                <option value={{null}} disabled>Select Category</option>
-                <option *ngFor="let category of productCategories" [value]="category.id">{{ category.name }}</option>
-            </select>
-            <div *ngIf="productForm.get('categoryID')?.invalid && productForm.get('categoryID')?.touched" class="error">
-                <div *ngIf="productForm.get('categoryID')?.errors?.['required']" class="error">Category is required.</div>
-            </div>
+          <label for="categoryID">Category:</label>
+          <select id="categoryID" formControlName="categoryID">
+            <option value={{null}} disabled>Select Category</option>
+            <option *ngFor="let category of productCategories" [value]="category.id">{{ category.name }}</option>
+          </select>
+          <div
+            *ngIf="productForm.get('categoryID')?.invalid && productForm.get('categoryID')?.touched"
+            class="error"
+          >
+            <div *ngIf="productForm.get('categoryID')?.errors?.['required']">Category is required.</div>
+          </div>
         </div>
         <div class="form-group">
-            <!-- Brand Dropdown -->
-            <label for="brandID">Brand:</label>
-            <select id="brandID" formControlName="brandID">
-                <option value={{null}} disabled>Select Brand</option>
-                <option *ngFor="let brand of productBrands" [value]="brand.id">{{ brand.name }}</option>
-            </select>
-            <div *ngIf="productForm.get('brandID')?.invalid && productForm.get('brandID')?.touched" class="error">
-                <div *ngIf="productForm.get('brandID')?.errors?.['required']" class="error">Brand is required.</div>
-            </div>
+          <label for="brandID">Brand:</label>
+          <select id="brandID" formControlName="brandID">
+            <option value={{null}} disabled>Select Brand</option>
+            <option *ngFor="let brand of productBrands" [value]="brand.id">{{ brand.name }}</option>
+          </select>
+          <div
+            *ngIf="productForm.get('brandID')?.invalid && productForm.get('brandID')?.touched"
+            class="error"
+          >
+            <div *ngIf="productForm.get('brandID')?.errors?.['required']">Brand is required.</div>
+          </div>
         </div>
         <div class="form-group" *ngIf="!(isAddFromUserDetail)">
-            <label for="quantity">Quantity:</label>
-            <input type="text" id="quantity" formControlName="quantity" placeholder="Enter product stock">
+          <label for="quantity">Quantity:</label>
+          <input
+            type="text"
+            id="quantity"
+            formControlName="quantity"
+            placeholder="Enter product stock"
+          />
         </div>
-
-        <div>
-            <button type="submit">Save</button>
+        <div class="form-group button-save-container">
+          <button type="submit" class="button-save">Save</button>
         </div>
-    </form>
-</div>
+      </form>
+    </div>
+  </div>
+  

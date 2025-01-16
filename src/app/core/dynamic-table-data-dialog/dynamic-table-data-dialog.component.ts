@@ -23,7 +23,6 @@ export class DynamicTableDataDialogComponent {
   ngOnInit(): void {
     this.tableDatalist = this.data.tableData;
     this.tableDataColumn = this.data.columns;
-    console.log(this.data.tableData);
   }
 
   // Close the dialog and redirect to ProductListComponent

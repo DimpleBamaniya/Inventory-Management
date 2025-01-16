@@ -53,7 +53,6 @@ export class ProductListComponent {
   fetchUsers() {
     this.productService.getAllProduct(this.pagingParams).subscribe(data => {
       this.products = data.data;
-      console.log(this.products);
       this.totalRecords = this.products.length;
       if (this.totalRecords == 0) {
         this.isNoRecordFound = true;
@@ -61,7 +60,6 @@ export class ProductListComponent {
       else {
         this.isNoRecordFound = false;
       }
-      console.log(this.totalRecords);
     });
   }
 
@@ -94,14 +92,12 @@ export class ProductListComponent {
   getAllProductCategories() {
     this.productCategoryService.getAllProductCategories().subscribe(pc => {
       this.productCategories = pc;
-      console.log(this.productCategories);
     });
   }
 
   getAllProductBrands() {
     this.productBrandService.getAllProductBrands().subscribe(pb => {
       this.productBrands = pb;
-      console.log(this.productBrands);
     });
   }
 
@@ -114,8 +110,18 @@ export class ProductListComponent {
     });
 
     // After dialog closes, navigate back to the product list
-    dialogRef.afterClosed().subscribe(() => {
-      this.refreshPage();
+    dialogRef.afterClosed().subscribe((res) => {
+      debugger
+      if(res.isClosePopUp){
+        // this.refreshPage();
+      }
+      else if(res.data == null || res.data == undefined){
+        alert(res.message)
+      }
+      else{
+        alert("Product added succussdully.");
+        this.refreshPage();
+      }
     });
   }
 

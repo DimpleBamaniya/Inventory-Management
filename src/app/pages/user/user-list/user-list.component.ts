@@ -46,7 +46,6 @@ export class UserListComponent {
   fetchUsers() {
     this.userService.getAllUser(this.pagingParams).subscribe(data => {
       this.users = data.data;
-      console.log(this.users);
       this.totalRecords = this.users.length;
       if (this.totalRecords == 0) {
         this.isNoRecordFound = true;
@@ -54,7 +53,6 @@ export class UserListComponent {
       else {
         this.isNoRecordFound = false;
       }
-      console.log(this.totalRecords);
     });
   }
 
