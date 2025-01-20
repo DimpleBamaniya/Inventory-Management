@@ -7,12 +7,17 @@
       <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="categoryID">Category:</label>
-          <select id="categoryID" formControlName="categoryID">
+          <select *ngIf="isAddFromUserDetail" id="categoryID" formControlName="categoryID"
+          (change)="onChangeCategory($event)">
+            <option value={{null}} disabled>Select Category</option>
+            <option *ngFor="let category of productCategories" [value]="category.id">{{ category.name }}</option>
+          </select>
+          <select *ngIf="!isAddFromUserDetail" id="categoryID" formControlName="categoryID">
             <option value={{null}} disabled>Select Category</option>
             <option *ngFor="let category of productCategories" [value]="category.id">{{ category.name }}</option>
           </select>
           <div
-            *ngIf="productForm.get('categoryID')?.invalid && productForm.get('categoryID')?.touched"
+            *ngIf="productForm.get('categoryID')?.invalid && productForm.get('categoryID')?.touched && isSubmitted"
             class="error"
           >
             <div *ngIf="productForm.get('categoryID')?.errors?.['required']">Category is required.</div>
@@ -22,10 +27,15 @@
           <label for="brandID">Brand:</label>
           <select id="brandID" formControlName="brandID">
             <option value={{null}} disabled>Select Brand</option>
-            <option *ngFor="let brand of productBrands" [value]="brand.id">{{ brand.name }}</option>
+            <div *ngIf="!isAddFromUserDetail">
+              <option *ngFor="let brand of productBrands" [value]="brand.id">{{ brand.name }}</option>
+            </div>
+            <div *ngIf="isAddFromUserDetail">
+              <option *ngFor="let brand of productBrandsByCategoryID" [value]="brand.id">{{ brand.name }}</option>
+            </div>
           </select>
           <div
-            *ngIf="productForm.get('brandID')?.invalid && productForm.get('brandID')?.touched"
+            *ngIf="productForm.get('brandID')?.invalid && productForm.get('brandID')?.touched && isSubmitted"
             class="error"
           >
             <div *ngIf="productForm.get('brandID')?.errors?.['required']">Brand is required.</div>

@@ -32,6 +32,9 @@ export class ProductDetailComponent {
   dataForSave: any = null;
   loginUserDetails: any = null;
   isAddFromUserDetail: boolean = false;
+  productBrandsByCategoryID: any = null;
+  isSubmitted: boolean = false;
+  isAvailableBrandByCategoryID: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ProductDetailComponent>,
@@ -47,7 +50,7 @@ export class ProductDetailComponent {
       id: [''],
       categoryID: ['', [Validators.required]],
       brandID: ['', [Validators.required]],
-      quantity: [null],
+      quantity: [0],
     });
   }
 
@@ -70,7 +73,7 @@ export class ProductDetailComponent {
             : '',
           quantity: this.data.tableData.quantity
             ? this.data.tableData.quantity
-            : null,
+            : 0,
         });
         this.productForm.controls['brandID'].disable();
         this.productForm.controls['categoryID'].disable();
@@ -104,7 +107,21 @@ export class ProductDetailComponent {
     });
   }
 
+  onChangeCategory(category:Event){
+    const selectedId = (category.target as HTMLSelectElement).value;
+    this.productBrandService.GetBrandsByCategoryID(Number(selectedId)).subscribe((pb) => {
+      this.productBrandsByCategoryID = pb;
+      debugger
+      //refresh data 
+      // if productBrandsByCategoryID has data 
+      // add desable if productBrandsByCategoryID is null 
+      // provide product list page link if productBrandsByCategoryIDis null
+      this.isAvailableBrandByCategoryID = this.productBrandsByCategoryID.length > 0 ? false : true;
+    });
+      }
+
   onSubmit() {
+    this.isSubmitted = true
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
       return;
@@ -114,16 +131,20 @@ export class ProductDetailComponent {
       if (this.dataForSave.id != null && this.dataForSave.id != 0) {
         this.dataForSave.categoryID = this.productForm.controls['categoryID'].value;
         this.dataForSave.brandID = this.productForm.controls['brandID'].value;
+        this.dataForSave.quantity = this.productForm.controls['quantity'].value;
         this.dataForSave.modifiedBy = (JSON.parse(this.loginUserDetails).id);
       }
       else {
         this.dataForSave.id = 0;
+        this.dataForSave.quantity = this.productForm.controls['quantity'].value;
         this.dataForSave.createdBy = (JSON.parse(this.loginUserDetails).id);
       }
       if (this.isAddFromUserDetail) {
         this.dataForSave.id = this.data.tableData.userID;
+        this.dataForSave.categoryID = this.productForm.controls['categoryID'].value;
+        this.dataForSave.brandID = this.productForm.controls['brandID'].value;
+        this.dataForSave.quantity = this.productForm.controls['quantity'].value;
         this.dataForSave.createdBy = (JSON.parse(this.loginUserDetails).id);
-
         this.userProductService.saveUserProducts(this.dataForSave).subscribe(productdetail => {
           this.dialogRef.close(productdetail);
         });
