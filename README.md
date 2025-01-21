@@ -26,3 +26,8 @@ git push origin -f
             //   "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
             //   "node_modules/ngx-toastr/toastr.css"
             // ],
+
+//delete confirmation dialog 
+ 
+//each dialog close event check
+ 
