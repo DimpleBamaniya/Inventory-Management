@@ -27,12 +27,12 @@
           <label for="brandID">Brand:</label>
           <select id="brandID" formControlName="brandID">
             <option value={{null}} disabled>Select Brand</option>
-            <div *ngIf="!isAddFromUserDetail">
+            <ng-container *ngIf="!isAddFromUserDetail">
               <option *ngFor="let brand of productBrands" [value]="brand.id">{{ brand.name }}</option>
-            </div>
-            <div *ngIf="isAddFromUserDetail">
+            </ng-container>
+            <ng-container *ngIf="isAddFromUserDetail">
               <option *ngFor="let brand of productBrandsByCategoryID" [value]="brand.id">{{ brand.name }}</option>
-            </div>
+            </ng-container>
           </select>
           <div
             *ngIf="productForm.get('brandID')?.invalid && productForm.get('brandID')?.touched && isSubmitted"

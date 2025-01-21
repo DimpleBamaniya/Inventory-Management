@@ -17,7 +17,7 @@ export class ProductBrandService {
 
   GetBrandsByCategoryID(categoryid: number): Observable<any>{
     let param = {
-      categoryID : categoryid
+      ID : categoryid
     }
     return this.http.post<any>(this.apiUrl + "/GetBrandsByCategoryID",param);  // Make the POST request and return the observable
   }

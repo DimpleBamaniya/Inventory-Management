@@ -32,7 +32,7 @@ export class ProductDetailComponent {
   dataForSave: any = null;
   loginUserDetails: any = null;
   isAddFromUserDetail: boolean = false;
-  productBrandsByCategoryID: any = null;
+  productBrandsByCategoryID : any = null;
   isSubmitted: boolean = false;
   isAvailableBrandByCategoryID: boolean = false;
 
@@ -90,7 +90,7 @@ export class ProductDetailComponent {
   // Close the dialog and redirect to ProductListComponent
   closeDialog(): void {
     let param = {
-      isClosePopUp : true
+      isClosePopUp: true
     }
     this.dialogRef.close(param);
   }
@@ -103,14 +103,15 @@ export class ProductDetailComponent {
 
   getAllProductBrands() {
     this.productBrandService.getAllProductBrands().subscribe((pb) => {
-      this.productBrands = pb;
+      this.productBrands = pb.data;
     });
   }
 
-  onChangeCategory(category:Event){
+  onChangeCategory(category: Event) {
     const selectedId = (category.target as HTMLSelectElement).value;
     this.productBrandService.GetBrandsByCategoryID(Number(selectedId)).subscribe((pb) => {
-      this.productBrandsByCategoryID = pb;
+      this.productForm.controls['brandID'].setValue(null);
+      this.productBrandsByCategoryID = pb.data;
       debugger
       //refresh data 
       // if productBrandsByCategoryID has data 
@@ -118,7 +119,7 @@ export class ProductDetailComponent {
       // provide product list page link if productBrandsByCategoryIDis null
       this.isAvailableBrandByCategoryID = this.productBrandsByCategoryID.length > 0 ? false : true;
     });
-      }
+  }
 
   onSubmit() {
     this.isSubmitted = true
