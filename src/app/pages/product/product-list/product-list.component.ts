@@ -16,15 +16,19 @@ import { ProductDetailComponent } from '../product-detail/product-detail.compone
 export class ProductListComponent {
 
   products: any[] = [];
-  totalRecords: number = 0;
-  currentPage: number = 1;
-  pageSize: number = 50;
-  searchString: string = '';
   userDetails: any = null;
   loginUserDetails: any = null;
   isNoRecordFound: boolean = false;
   productCategories: any = null;
   productBrands: any = null;
+  
+  //pagination
+  totalPages = 0;
+  currentPage: number = 1;
+  pageSize: number = 50;
+  pageSizeOptions = [2, 5, 10, 50, 100];
+  totalRecords: number = 0;
+  searchString: string = '';
 
   columns: any = null; // Dynamic columns to be passed to the dialog
 
@@ -51,9 +55,13 @@ export class ProductListComponent {
   }
 
   fetchUsers() {
+    debugger
     this.productService.getAllProduct(this.pagingParams).subscribe(data => {
       this.products = data.data;
-      this.totalRecords = this.products.length;
+      this.totalRecords = this.products[0].totalRecords;
+      // this.totalRecords = this.products.length;
+      this.totalPages = Math.ceil(this.totalRecords / this.pagingParams.pageSize);
+      this.isNoRecordFound = this.totalRecords === 0;
       if (this.totalRecords == 0) {
         this.isNoRecordFound = true;
       }
@@ -64,7 +72,7 @@ export class ProductListComponent {
   }
 
   searchUsers() {
-    this.currentPage = 1; // Reset to first page on search
+    this.pagingParams.pageNo = 1;
     this.pagingParams.searchString = this.searchString;
     this.fetchUsers();
   }
@@ -189,6 +197,25 @@ export class ProductListComponent {
         });
       }
     });
+  }
+
+  onPageSizeChange(): void {
+    this.pagingParams.pageNo = 1;
+    this.fetchUsers();
+  }
+
+  prevPage(): void {
+    if (this.pagingParams.pageNo > 1) {
+      this.pagingParams.pageNo--;
+      this.fetchUsers();
+    }
+  }
+
+  nextPage(): void {
+    if (this.pagingParams.pageNo < this.totalPages) {
+      this.pagingParams.pageNo++;
+      this.fetchUsers();
+    }
   }
 
 }

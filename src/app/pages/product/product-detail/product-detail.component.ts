@@ -103,7 +103,8 @@ export class ProductDetailComponent {
 
   getAllProductBrands() {
     this.productBrandService.getAllProductBrands().subscribe((pb) => {
-      this.productBrands = pb.data;
+      debugger
+      this.productBrands = pb;
     });
   }
 
