@@ -55,7 +55,6 @@ export class ProductListComponent {
   }
 
   fetchUsers() {
-    debugger
     this.productService.getAllProduct(this.pagingParams).subscribe(data => {
       this.products = data.data;
       this.totalRecords = this.products[0].totalRecords;
@@ -72,7 +71,7 @@ export class ProductListComponent {
   }
 
   searchUsers() {
-    this.pagingParams.pageNo = 1;
+    // this.pagingParams.pageNo = 1;
     this.pagingParams.searchString = this.searchString;
     this.fetchUsers();
   }
@@ -119,15 +118,13 @@ export class ProductListComponent {
 
     // After dialog closes, navigate back to the product list
     dialogRef.afterClosed().subscribe((res) => {
-      debugger
       if(res.isClosePopUp){
-        // this.refreshPage();
       }
       else if(res.data == null || res.data == undefined){
         alert(res.message)
       }
       else{
-        alert("Product added succussdully.");
+        alert("Product added successfully.");
         this.refreshPage();
       }
     });

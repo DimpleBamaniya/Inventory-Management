@@ -103,7 +103,6 @@ export class ProductDetailComponent {
 
   getAllProductBrands() {
     this.productBrandService.getAllProductBrands().subscribe((pb) => {
-      debugger
       this.productBrands = pb;
     });
   }
@@ -113,11 +112,6 @@ export class ProductDetailComponent {
     this.productBrandService.GetBrandsByCategoryID(Number(selectedId)).subscribe((pb) => {
       this.productForm.controls['brandID'].setValue(null);
       this.productBrandsByCategoryID = pb.data;
-      debugger
-      //refresh data 
-      // if productBrandsByCategoryID has data 
-      // add desable if productBrandsByCategoryID is null 
-      // provide product list page link if productBrandsByCategoryIDis null
       this.isAvailableBrandByCategoryID = this.productBrandsByCategoryID.length > 0 ? false : true;
     });
   }

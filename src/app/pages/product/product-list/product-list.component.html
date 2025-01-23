@@ -60,6 +60,7 @@
 
     <!-- Pagination Controls -->
     <div class="pagination">
+      <span>Total Record:  {{ totalRecords }}</span>
       <button class="btn btn-secondary" (click)="prevPage()" [disabled]="pagingParams.pageNo === 1">Previous</button>
       <span>Page {{ pagingParams.pageNo }} of {{ totalPages }}</span>
       <button class="btn btn-secondary" (click)="nextPage()" [disabled]="pagingParams.pageNo === totalPages">Next</button>

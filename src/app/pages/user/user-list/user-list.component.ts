@@ -26,6 +26,7 @@ export class UserListComponent {
 
   // pagination
   pagingParams!: BasicPagingParams;
+  totalPages = 0;
 
   constructor(
     private userService: UserService,
@@ -43,10 +44,11 @@ export class UserListComponent {
     this.fetchUsers();
   }
 
-  fetchUsers() {
-    this.userService.getAllUser(this.pagingParams).subscribe(data => {
-      this.users = data.data;
+  fetchUsers(): void {
+    this.userService.getAllUser(this.pagingParams).subscribe((response: any) => {
+      this.users = response.data;
       this.totalRecords = this.users.length;
+      this.totalPages = Math.ceil(this.totalRecords / this.pagingParams.pageSize);
       if (this.totalRecords == 0) {
         this.isNoRecordFound = true;
       }
@@ -56,19 +58,29 @@ export class UserListComponent {
     });
   }
 
-  searchUsers() {
-    this.currentPage = 1; // Reset to first page on search
-    this.pagingParams.searchString = this.searchString;
+  changeSortColumn(column: string): void {
+    this.pagingParams.sortColumn = column;
+    this.pagingParams.sortOrder =
+      this.pagingParams.sortOrder === 'ASC' ? 'DESC' : 'ASC';
     this.fetchUsers();
   }
 
-  changeSortColumn(column: any) {
-    if (this.pagingParams.sortOrder == 'ASC') {
-      this.pagingParams.sortOrder = 'DESC';
-    } else {
-      this.pagingParams.sortOrder = 'ASC';
-    }
-    this.pagingParams.sortColumn = column;
+  changePageSize(pageSize: any): void {
+    const pageSizeValue = (pageSize.target as HTMLSelectElement).value;
+    this.pagingParams.pageSize = Number(pageSizeValue);
+    this.pagingParams.pageNo = 1; // Reset to first page
+    this.fetchUsers();
+  }
+
+  changePage(pageNo: number): void {
+    debugger
+    this.pagingParams.pageNo = pageNo;
+    this.fetchUsers();
+  }
+
+  searchUsers() {
+    this.currentPage = 1; // Reset to first page on search
+    this.pagingParams.searchString = this.searchString;
     this.fetchUsers();
   }
 
