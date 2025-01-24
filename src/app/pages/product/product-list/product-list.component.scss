@@ -122,3 +122,34 @@ h1 {
   gap: 20px;
 }
 
+.animated-btn {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: inherit; /* Retain original background color */
+  color: inherit; /* Retain inherited text color */
+  border-color:#c7c6c6; /* Remove border */
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* Hover Effect */
+  &:hover {
+    transform: scale(1.05); /* Slight scaling effect */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Add shadow */
+  }
+
+  /* Active/Pressed Effect */
+  &:active {
+    transform: scale(1); /* Reset scaling */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+  }
+
+  &:hover::after {
+    width: 300%;
+    height: 300%;
+    opacity: 0.2; /* Subtle ripple effect */
+  }
+}

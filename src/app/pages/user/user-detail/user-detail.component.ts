@@ -63,13 +63,12 @@ export class UserDetailComponent implements OnInit {
     this.getAllCity();
     this.getAllDepartments();
     this.userID = this._activeRoute.snapshot.paramMap.get('id');
-    if (this.userID == null) {
-      this.userForm.get('emailID')?.setValidators([Validators.required]);
-      this.userForm.get('emailID')?.setValidators([Validators.email]);
+    debugger
+    if (this.userID == null || this.userID == undefined || Number(this.userID) == 0) {
+      this.userForm.get('emailID')?.setValidators([Validators.required,Validators.email]);
       this.userForm.get('emailID')?.updateValueAndValidity();
-      this.userForm.get('password')?.setValidators([Validators.required]);
-      this.userForm.get('password')?.setValidators(Validators.minLength(6));
-      this.userForm.get('password')?.updateValueAndValidity();
+      this.userForm.get('password')?.setValidators([Validators.required,Validators.minLength(6)]);
+      this.userForm.get('emailID')?.updateValueAndValidity();
       this.userForm.get('cityID')?.setValidators(null);
       this.userForm.get('cityID')?.updateValueAndValidity();
     } else {
@@ -167,9 +166,6 @@ export class UserDetailComponent implements OnInit {
 
   onSubmit() {
     this.isSubmited = true;
-    // this.userForm.patchValue({
-
-    // });
 
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();
@@ -178,9 +174,13 @@ export class UserDetailComponent implements OnInit {
     if (this.userForm.valid) {
       this.dataForSave = this.userForm.value;
       if (this.dataForSave.id) {
+        this.dataForSave.departmentID = this.userForm.controls['departmentID'].value
         this.dataForSave.modifiedBy = (JSON.parse(this.loginUserDetails).id);
       }
       else {
+        this.dataForSave.id = 0;
+        this.dataForSave.departmentID = null;
+        this.dataForSave.cityID = null;
         this.dataForSave.createdBy = (JSON.parse(this.loginUserDetails).id);
       }
 
@@ -261,7 +261,9 @@ export class UserDetailComponent implements OnInit {
 
     // After dialog closes, navigate back to the product list
     dialogRef.afterClosed().subscribe((res) => {
-      if(res.data == null || res.data == undefined){
+      if(res.isClosePopUp){
+        dialogRef.close();
+      }else if(res.data == null || res.data == undefined){
         alert(res.message);
       }else{
         alert("Product added successfully.");

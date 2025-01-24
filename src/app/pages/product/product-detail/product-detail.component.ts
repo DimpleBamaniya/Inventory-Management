@@ -145,7 +145,7 @@ export class ProductDetailComponent {
           this.dialogRef.close(productdetail);
         });
       } else {
-        this.productService.saveProduct(this.dataForSave).subscribe(productdetail => {
+          this.productService.saveProduct(this.dataForSave).subscribe(productdetail => {
           this.dialogRef.close(productdetail);
         });
       }

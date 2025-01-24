@@ -21,11 +21,10 @@ export class ProductListComponent {
   isNoRecordFound: boolean = false;
   productCategories: any = null;
   productBrands: any = null;
-  
+
   //pagination
   totalPages = 0;
   currentPage: number = 1;
-  pageSize: number = 50;
   pageSizeOptions = [2, 5, 10, 50, 100];
   totalRecords: number = 0;
   searchString: string = '';
@@ -49,18 +48,19 @@ export class ProductListComponent {
     if (this.loginUserDetails == null) {
       this.router.navigateByUrl(`/login`);
     }
-    this.fetchUsers();
+    this.fetchProducts();
     this.getAllProductCategories();
     this.getAllProductBrands();
   }
 
-  fetchUsers() {
+  fetchProducts() {
     this.productService.getAllProduct(this.pagingParams).subscribe(data => {
       this.products = data.data;
-      this.totalRecords = this.products[0].totalRecords;
+      this.totalRecords = this.products.length >= 1 ? this.products[0].totalRecords : 0;
       // this.totalRecords = this.products.length;
       this.totalPages = Math.ceil(this.totalRecords / this.pagingParams.pageSize);
       this.isNoRecordFound = this.totalRecords === 0;
+      debugger
       if (this.totalRecords == 0) {
         this.isNoRecordFound = true;
       }
@@ -70,10 +70,10 @@ export class ProductListComponent {
     });
   }
 
-  searchUsers() {
-    // this.pagingParams.pageNo = 1;
+  searchProducts() {
+    this.pagingParams.pageNo = 1;
     this.pagingParams.searchString = this.searchString;
-    this.fetchUsers();
+    this.fetchProducts();
   }
 
   changeSortColumn(column: any) {
@@ -83,7 +83,7 @@ export class ProductListComponent {
       this.pagingParams.sortOrder = 'ASC';
     }
     this.pagingParams.sortColumn = column;
-    this.fetchUsers();
+    this.fetchProducts();
 
   }
 
@@ -118,12 +118,13 @@ export class ProductListComponent {
 
     // After dialog closes, navigate back to the product list
     dialogRef.afterClosed().subscribe((res) => {
-      if(res.isClosePopUp){
+      if (res.isClosePopUp) {
+        dialogRef.close();
       }
-      else if(res.data == null || res.data == undefined){
+      else if (res.data == null || res.data == undefined) {
         alert(res.message)
       }
-      else{
+      else {
         alert("Product added successfully.");
         this.refreshPage();
       }
@@ -198,20 +199,20 @@ export class ProductListComponent {
 
   onPageSizeChange(): void {
     this.pagingParams.pageNo = 1;
-    this.fetchUsers();
+    this.fetchProducts();
   }
 
   prevPage(): void {
     if (this.pagingParams.pageNo > 1) {
       this.pagingParams.pageNo--;
-      this.fetchUsers();
+      this.fetchProducts();
     }
   }
 
   nextPage(): void {
     if (this.pagingParams.pageNo < this.totalPages) {
       this.pagingParams.pageNo++;
-      this.fetchUsers();
+      this.fetchProducts();
     }
   }
 

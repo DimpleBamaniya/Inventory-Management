@@ -1,4 +1,54 @@
-a.nav-link:hover {
-    cursor: pointer;
+// Define animations
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
   }
-  
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+// Style for the navbar
+.navbar {
+  animation: fadeIn 1s ease-in-out;
+}
+
+// Animate nav items
+.navbar-nav .nav-item {
+  animation: fadeIn 1.5s ease;
+}
+
+// Centered user name
+.navbar-text {
+  animation: slideInFromLeft 1s ease;
+}
+
+// Logout button animation
+.navbar-nav.ms-auto {
+  animation: slideInFromRight 1s ease;
+}
+
+// Hover effect for links
+.nav-link:hover {
+  color: #0d6efd; // Bootstrap primary color
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}

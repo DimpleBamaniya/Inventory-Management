@@ -1,7 +1,7 @@
 <app-layout></app-layout>
 <div class="container">
   <h1>User List</h1>
-  <button [routerLink]="['/user/detail/', 0]" type="submit">Add User</button>
+  <button [routerLink]="['/user/detail/',addUser]" type="submit">Add User</button>
 
   <!-- Search Bar -->
   <div class="search-container">
@@ -43,27 +43,24 @@
   </table>
 
   <nav>
-    <div class="col-md-4 text-end">
-      <select class="form-select" (change)="changePageSize($event)">
-        <option value="5">5</option>
-        <option value="10" selected>10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-      </select>
-    </div>
     <ul class="pagination justify-content-center">
+      <span>Total Record: {{ totalRecords }}</span>
       <li class="page-item">
-        <button class="page-link" (click)="changePage(pagingParams.pageNo - 1)">Previous</button>
-      </li>
-      <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
-        [class.active]="pagingParams.pageNo === i + 1">
-        <button class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</button>
+        <select class="form-select small-dropdown" (change)="changePageSize($event)" [(ngModel)]="pagingParams.pageSize">
+          <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+        </select>
       </li>
       <li class="page-item">
-        <button class="page-link" (click)="changePage(pagingParams.pageNo + 1)">Next</button>
+        <button class="page-link" (click)="changePage(pagingParams.pageNo - 1)" [disabled]="pagingParams.pageNo === 1"> Previous</button>
+      </li>
+      <li class="page-item">
+        <span>Page {{ pagingParams.pageNo }} of {{ totalPages }}</span>
+      </li>
+      <li class="page-item">
+        <button class="page-link" (click)="changePage(pagingParams.pageNo + 1)" [disabled]="pagingParams.pageNo === totalPages">Next</button>
       </li>
     </ul>
   </nav>
 </div>
 
-//disable privious and next button 
+<!-- disable privious and next button  -->

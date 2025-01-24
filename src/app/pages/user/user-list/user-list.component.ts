@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class UserListComponent {
   users: any[] = [];
+  addUser : number = 0;
   totalRecords: number = 0;
   currentPage: number = 1;
   pageSize: number = 50;
@@ -22,6 +23,7 @@ export class UserListComponent {
   loginUserDetails: any = null;
   isNoRecordFound: boolean = false;
   userProductDetail: any = null;
+  pageSizeOptions = [2, 5, 10, 50, 100];
   columns: any = null; // Dynamic columns to be passed to the dialog
 
   // pagination
@@ -47,7 +49,7 @@ export class UserListComponent {
   fetchUsers(): void {
     this.userService.getAllUser(this.pagingParams).subscribe((response: any) => {
       this.users = response.data;
-      this.totalRecords = this.users.length;
+      this.totalRecords = this.users.length >= 1 ? this.users[0].totalRecords : 0;
       this.totalPages = Math.ceil(this.totalRecords / this.pagingParams.pageSize);
       if (this.totalRecords == 0) {
         this.isNoRecordFound = true;
@@ -73,13 +75,13 @@ export class UserListComponent {
   }
 
   changePage(pageNo: number): void {
-    debugger
     this.pagingParams.pageNo = pageNo;
     this.fetchUsers();
   }
 
   searchUsers() {
     this.currentPage = 1; // Reset to first page on search
+    this.pagingParams.pageNo = 1;
     this.pagingParams.searchString = this.searchString;
     this.fetchUsers();
   }
