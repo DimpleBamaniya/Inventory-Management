@@ -30,4 +30,11 @@ git push origin -f
 //delete confirmation dialog 
  
 //each dialog close event check
+
+<!-- // "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ] -->
  

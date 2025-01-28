@@ -7,15 +7,16 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ToasterService } from './core/Toaster/toaster.service';
 import { ToasterComponent } from './core/Toaster/toaster.component';
+import { AboutUsComponent } from './pages/aboutUs/about-us/about-us.component';
 
 @NgModule({
   declarations: [AppComponent,
-    ToasterComponent], // Declare the toaster component here], // No declarations because AppComponent is standalone
+    ToasterComponent,AboutUsComponent], // Declare the toaster component here], // No declarations because AppComponent is standalone
   imports: [
     BrowserModule,
     CommonModule,
     HttpClientModule,
-    RouterModule.forRoot(routes), // Import app routes,
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }), // Import app routes,
     ToasterComponent
   ],
   providers : [ToasterService]

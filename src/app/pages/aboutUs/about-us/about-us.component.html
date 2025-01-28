@@ -1,0 +1,95 @@
+<div class="about-us">
+    <header>
+        <h1>About Us</h1>
+        <nav>
+            <a class="nav-link" [routerLink]="['/login']">Back</a>
+            <ul>
+                <li><a routerLink="" fragment="introduction">Introduction</a></li>
+                <li><a routerLink="" fragment="features">Features</a></li>
+                <li><a routerLink="" fragment="usage">Usage</a></li>
+                <li><a routerLink="" fragment="contact">Contact</a></li>
+                <li><a routerLink="" fragment="version-2">Version-2</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <body>
+        <ng-container id="introduction" class="section">
+            <h2>Introduction</h2>
+            <p>This is the introduction section, where we provide an overview of our project.</p>
+        </ng-container>
+
+        <ng-container id="features" class="section">
+            <h2>Features</h2>
+            <ul>
+                <li>Log in Page with <b>Email</b> and <b>Password</b> validation</li>
+                <p>Log in Page must have proper Email and password.</p>
+                <li>Feature 2</li>
+                <li>Feature 3</li>
+            </ul>
+        </ng-container>
+
+        <ng-container id="usage" class="section">
+            <h2>Usage</h2>
+            <p>Here’s how you can use our project effectively.</p>
+        </ng-container>
+
+        <ng-container id="contact" class="section">
+            <h2>Contact</h2>
+            <p>Contact us for more information or support.</p>
+        </ng-container>
+
+        <ng-container id="version-2" class="section">
+            <h2>Version-2</h2>
+            <p>Details about Version-2 of the project will be listed here.</p>
+            <ul>
+                <li>Email</li>
+                <li>Password with confirm Password field</li>
+            </ul>
+        </ng-container>
+
+        <!-- Unit Testing with Image Grid -->
+        <ng-container id="unitTesting" class="section">
+            <h2>Unit Testing</h2>
+            <ul>
+                <li>Login Page
+                    <div class="image-grid">
+                        <div *ngFor="let image of images_LoginPage; let i = index">
+                            <p>{{ image.label }}</p>
+                            <img [src]="image.src" alt="Image not found" (click)="openModal(i,'images_LoginPage')" />
+                        </div>
+                    </div>
+                </li>
+                <li>User Detail page (No permission)
+                    <div class="image-grid">
+                        <div *ngFor="let image of images_NoPermissionUserDetails; let i = index">
+                            <p>{{ image.label }}</p>
+                            <img [src]="image.src" alt="Image not found" (click)="openModal(i,'images_NoPermissionUserDetails')" />
+                        </div>
+                    </div>
+                </li>
+                <li>User Detail page (With permission)
+                    <div class="image-grid">
+                        <div *ngFor="let image of images_PermissionUserDetails; let i = index">
+                            <p>{{ image.label }}</p>
+                            <img [src]="image.src" alt="Image not found" (click)="openModal(i,'images_PermissionUserDetails')" />
+                        </div>
+                    </div>
+                </li>
+                
+            </ul>
+            
+        </ng-container>
+
+        <!-- Image Modal -->
+        <div id="imageModal" class="image-modal">
+            <div class="modal-content">
+                <button class="close-btn" (click)="closeModal()">✖</button>
+                <button class="prev-btn" (click)="prevImage(activeImagePreview)">⬅</button>
+                <img id="modalImage" src="" alt="Expanded Image"/>
+                <button class="next-btn" (click)="nextImage(activeImagePreview)">➡</button>
+                <b><p id="imageLabel"></p></b>
+            </div>
+        </div>
+    </body>
+</div>

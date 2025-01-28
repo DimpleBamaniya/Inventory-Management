@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { UserNotFoundComponent } from './pages/user/user-not-found/user-not-found.component';
+import { AboutUsComponent } from './pages/aboutUs/about-us/about-us.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,10 @@ export const routes: Routes = [
   {
     path: 'logout',
     component: LogoutComponent,
+  },
+  {
+    path: 'aboutUs',
+    component: AboutUsComponent,
   },
   {
     path: 'userNotFound',
