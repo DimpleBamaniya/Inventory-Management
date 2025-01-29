@@ -1,54 +1,35 @@
-// Define animations
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+// styles.scss
+
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+
+body {
+  background-color: #f8f9fa;
 }
 
-@keyframes slideInFromRight {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInFromLeft {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-// Style for the navbar
 .navbar {
-  animation: fadeIn 1s ease-in-out;
+  background-color: $primary-color;
+
+  .nav-link {
+    color: rgb(67, 0, 252);
+
+    &:hover {
+      color: lighten($primary-color, 10%);
+    }
+  }
+
+  .navbar-text {
+    color: rgb(38, 0, 255);
+    font-size: 1.2rem;
+    text-align: center;
+  }
 }
 
-// Animate nav items
-.navbar-nav .nav-item {
-  animation: fadeIn 1.5s ease;
-}
+// Add additional styles for PrimeNG components
+.p-button {
+  background-color: $primary-color;
 
-// Centered user name
-.navbar-text {
-  animation: slideInFromLeft 1s ease;
-}
-
-// Logout button animation
-.navbar-nav.ms-auto {
-  animation: slideInFromRight 1s ease;
-}
-
-// Hover effect for links
-.nav-link:hover {
-  color: #0d6efd; // Bootstrap primary color
-  text-decoration: underline;
-  transition: color 0.3s ease;
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
 }

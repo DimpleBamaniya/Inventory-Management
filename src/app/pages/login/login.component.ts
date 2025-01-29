@@ -6,11 +6,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CityService } from '../city/city.service';
 import { DepartmentService } from '../department/department.service';
+import { LayoutComponent } from '../layout/layout.component';
 
 @Component({
   selector: 'app-login',
   standalone : true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule,LayoutComponent],
   templateUrl: './login.component.html',
   providers: [UserService,HttpClient,CityService,DepartmentService],
   styleUrls: ['./login.component.scss']

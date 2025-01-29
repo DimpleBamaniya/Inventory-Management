@@ -1,0 +1,49 @@
+<app-layout></app-layout>
+<ng-container id="unitTesting" class="section">
+    <header>
+        <h1>Unit Testing</h1>
+    </header>
+    <ul>
+        <li>Login Page
+            <div class="image-grid">
+                <div *ngFor="let image of images_LoginPage; let i = index">
+                    <p>{{ image.label }}</p>
+                    <img [src]="image.src" alt="Image not found" (click)="openModal(i,'images_LoginPage')" />
+                </div>
+            </div>
+        </li>
+        <li>User Detail page (No permission)
+            <div class="image-grid">
+                <div *ngFor="let image of images_NoPermissionUserDetails; let i = index">
+                    <p>{{ image.label }}</p>
+                    <img [src]="image.src" alt="Image not found"
+                        (click)="openModal(i,'images_NoPermissionUserDetails')" />
+                </div>
+            </div>
+        </li>
+        <li>User Detail page (With permission)
+            <div class="image-grid">
+                <div *ngFor="let image of images_PermissionUserDetails; let i = index">
+                    <p>{{ image.label }}</p>
+                    <img [src]="image.src" alt="Image not found"
+                        (click)="openModal(i,'images_PermissionUserDetails')" />
+                </div>
+            </div>
+        </li>
+
+    </ul>
+
+</ng-container>
+
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal">
+    <div class="modal-content">
+        <button class="close-btn" (click)="closeModal()">✖</button>
+        <button class="prev-btn" (click)="prevImage(activeImagePreview)">⬅</button>
+        <img id="modalImage" src="" alt="Expanded Image" />
+        <button class="next-btn" (click)="nextImage(activeImagePreview)">➡</button>
+        <b>
+            <p id="imageLabel"></p>
+        </b>
+    </div>
+</div>

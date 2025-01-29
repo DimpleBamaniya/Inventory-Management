@@ -3,12 +3,15 @@ import { LoginComponent } from './pages/login/login.component';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { UserNotFoundComponent } from './pages/user/user-not-found/user-not-found.component';
 import { AboutUsComponent } from './pages/aboutUs/about-us/about-us.component';
+import { AuthGuard } from './auth.guard';
+import { UnitTestingComponent } from './pages/unit-testing/unit-testing/unit-testing.component';
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
+   
   },
   {
     path: 'login',
@@ -21,10 +24,17 @@ export const routes: Routes = [
   {
     path: 'aboutUs',
     component: AboutUsComponent,
+    // canActivate: [AuthGuard]
+  },
+  {
+    path: 'unitTesting',
+    component: UnitTestingComponent,
+    // canActivate: [AuthGuard]
   },
   {
     path: 'userNotFound',
     component: UserNotFoundComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'user',

@@ -60,7 +60,6 @@ export class ProductListComponent {
       // this.totalRecords = this.products.length;
       this.totalPages = Math.ceil(this.totalRecords / this.pagingParams.pageSize);
       this.isNoRecordFound = this.totalRecords === 0;
-      debugger
       if (this.totalRecords == 0) {
         this.isNoRecordFound = true;
       }

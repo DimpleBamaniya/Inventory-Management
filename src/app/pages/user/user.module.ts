@@ -5,15 +5,18 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { LayoutComponent } from '../layout/layout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from '../../auth.guard';
 
 export const routes: Routes = [
 {
     path: 'detail/:id',
-    component: UserDetailComponent
+    component: UserDetailComponent,
+    canActivate: [AuthGuard]
 },
 {
     path: 'list',
-    component: UserListComponent
+    component: UserListComponent,
+    canActivate: [AuthGuard]
 }
 ];
 

@@ -63,7 +63,6 @@ export class UserDetailComponent implements OnInit {
     this.getAllCity();
     this.getAllDepartments();
     this.userID = this._activeRoute.snapshot.paramMap.get('id');
-    debugger
     if (this.userID == null || this.userID == undefined || Number(this.userID) == 0) {
       this.userForm.get('emailID')?.setValidators([Validators.required,Validators.email]);
       this.userForm.get('emailID')?.updateValueAndValidity();

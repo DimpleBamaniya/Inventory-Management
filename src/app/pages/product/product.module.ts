@@ -9,15 +9,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AuthGuard } from '../../auth.guard';
 
 export const routes: Routes = [
-  // {
-  //     path: 'detail/:id',
-  //     component: ProductDetailComponent
-  // },
   {
     path: 'list',
-    component: ProductListComponent
+    component: ProductListComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
