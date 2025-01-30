@@ -84,10 +84,10 @@ export class LayoutComponent implements OnInit {
     const userID = this._activeRoute.snapshot.paramMap.get('id');
     if (this.router.url == ('/aboutUs')) {
       this.isHideAboutUs = true;
-    } else if (this.router.url == ('/product/list') || this.router.url == ('/user/list')) {
+    } else if (this.router.url == ('/product/list') || this.router.url == ('/user/list') || this.router.url == '/userNotFound') {
       this.isHideAboutUs = true;
     } else if (this.router.url == ('/user/detail/' + userID)) {
-        this.isHideAboutUs = true;
+      this.isHideAboutUs = true;
     }
     else {
       this.isHideAboutUs = false;

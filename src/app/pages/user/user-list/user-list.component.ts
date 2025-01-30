@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class UserListComponent {
   users: any[] = [];
-  addUser : number = 0;
+  addUser: number = 0;
   totalRecords: number = 0;
   currentPage: number = 1;
   pageSize: number = 50;
@@ -135,6 +135,7 @@ export class UserListComponent {
           deletedBy: (JSON.parse(this.loginUserDetails).id)
         }
         this.userService.DeleteUser(param).subscribe(isDeleted => {
+          alert("User deleted successfully.")
           this.refreshPage();
         });
       }

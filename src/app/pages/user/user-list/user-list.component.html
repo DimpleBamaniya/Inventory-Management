@@ -46,21 +46,22 @@
     <ul class="pagination justify-content-center">
       <span>Total Record: {{ totalRecords }}</span>
       <li class="page-item">
-        <select class="form-select small-dropdown" (change)="changePageSize($event)" [(ngModel)]="pagingParams.pageSize">
+        <select class="form-select small-dropdown" (change)="changePageSize($event)"
+          [(ngModel)]="pagingParams.pageSize">
           <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
         </select>
       </li>
       <li class="page-item">
-        <button class="page-link" (click)="changePage(pagingParams.pageNo - 1)" [disabled]="pagingParams.pageNo === 1"> Previous</button>
+        <button class="page-link" (click)="changePage(pagingParams.pageNo - 1)" [disabled]="pagingParams.pageNo === 1">
+          Previous</button>
       </li>
       <li class="page-item">
         <span>Page {{ pagingParams.pageNo }} of {{ totalPages }}</span>
       </li>
       <li class="page-item">
-        <button class="page-link" (click)="changePage(pagingParams.pageNo + 1)" [disabled]="pagingParams.pageNo === totalPages">Next</button>
+        <button class="page-link" (click)="changePage(pagingParams.pageNo + 1)"
+          [disabled]="pagingParams.pageNo === totalPages">Next</button>
       </li>
     </ul>
   </nav>
 </div>
-
-<!-- disable privious and next button  -->

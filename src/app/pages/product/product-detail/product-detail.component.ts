@@ -26,13 +26,14 @@ export class ProductDetailComponent {
   tableDatalist: any;
   tableDataColumn: any;
   dialogLabel: any;
+  buttonName: any;
   productCategories: any = null;
   productBrands: any = null;
   productForm: FormGroup;
   dataForSave: any = null;
   loginUserDetails: any = null;
   isAddFromUserDetail: boolean = false;
-  productBrandsByCategoryID : any = null;
+  productBrandsByCategoryID: any = null;
   isSubmitted: boolean = false;
   isAvailableBrandByCategoryID: boolean = false;
 
@@ -56,6 +57,7 @@ export class ProductDetailComponent {
 
   ngOnInit(): void {
     this.dialogLabel = 'Add Product';
+    this.buttonName = 'Add'
     this.loginUserDetails = localStorage.getItem('loginUserDetails');
     if (this.loginUserDetails == null) {
       this.router.navigateByUrl(`/login`);
@@ -63,8 +65,10 @@ export class ProductDetailComponent {
     if (this.data.tableData != null && this.data.tableData != 0) {
       if (this.data.tableData.isAddFromUserDetail) {
         this.isAddFromUserDetail = this.data.tableData.isAddFromUserDetail;
+        this.dialogLabel = 'Assign Product';
       } else {
         this.dialogLabel = 'Edit Product Stock';
+        this.buttonName = 'Edit'
         this.productForm.patchValue({
           id: this.data.tableData.id ? this.data.tableData.id : '',
           brandID: this.data.tableData.brandID ? this.data.tableData.brandID : '',
@@ -145,7 +149,9 @@ export class ProductDetailComponent {
           this.dialogRef.close(productdetail);
         });
       } else {
-          this.productService.saveProduct(this.dataForSave).subscribe(productdetail => {
+        this.productService.saveProduct(this.dataForSave).subscribe(productdetail => {
+          debugger
+          productdetail.isEditProduct = this.buttonName == 'Edit';
           this.dialogRef.close(productdetail);
         });
       }

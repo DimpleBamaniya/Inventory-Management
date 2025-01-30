@@ -64,9 +64,9 @@ export class UserDetailComponent implements OnInit {
     this.getAllDepartments();
     this.userID = this._activeRoute.snapshot.paramMap.get('id');
     if (this.userID == null || this.userID == undefined || Number(this.userID) == 0) {
-      this.userForm.get('emailID')?.setValidators([Validators.required,Validators.email]);
+      this.userForm.get('emailID')?.setValidators([Validators.required, Validators.email]);
       this.userForm.get('emailID')?.updateValueAndValidity();
-      this.userForm.get('password')?.setValidators([Validators.required,Validators.minLength(6)]);
+      this.userForm.get('password')?.setValidators([Validators.required, Validators.minLength(6)]);
       this.userForm.get('emailID')?.updateValueAndValidity();
       this.userForm.get('cityID')?.setValidators(null);
       this.userForm.get('cityID')?.updateValueAndValidity();
@@ -184,11 +184,20 @@ export class UserDetailComponent implements OnInit {
       }
 
       this.userService.saveUser(this.dataForSave).subscribe(userdetail => {
+        debugger
         if (this.isUpdateForm) {
-          alert("User updated successfully.")
+          if (userdetail.data == null && userdetail.message) {
+            alert(userdetail.message);
+          } else {
+            alert("User updated successfully.")
+          }
           this.refreshPage();
         } else {
-          alert("User added successfully.")
+          if (userdetail.data == null && userdetail.message) {
+            alert(userdetail.message);
+          } else {
+            alert("User added successfully.")
+          }
           this.router.navigateByUrl('/user/list');
         }
       });
@@ -260,12 +269,12 @@ export class UserDetailComponent implements OnInit {
 
     // After dialog closes, navigate back to the product list
     dialogRef.afterClosed().subscribe((res) => {
-      if(res.isClosePopUp){
+      if (res.isClosePopUp) {
         dialogRef.close();
-      }else if(res.data == null || res.data == undefined){
+      } else if (res.data == null || res.data == undefined) {
         alert(res.message);
-      }else{
-        alert("Product added successfully.");
+      } else {
+        alert("Product assigned successfully.");
       }
       this.refreshPage();
     });

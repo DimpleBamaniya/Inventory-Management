@@ -24,12 +24,10 @@ export const routes: Routes = [
   {
     path: 'aboutUs',
     component: AboutUsComponent,
-    // canActivate: [AuthGuard]
   },
   {
     path: 'unitTesting',
     component: UnitTestingComponent,
-    // canActivate: [AuthGuard]
   },
   {
     path: 'userNotFound',

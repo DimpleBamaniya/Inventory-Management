@@ -117,6 +117,7 @@ export class ProductListComponent {
 
     // After dialog closes, navigate back to the product list
     dialogRef.afterClosed().subscribe((res) => {
+      debugger
       if (res.isClosePopUp) {
         dialogRef.close();
       }
@@ -124,7 +125,12 @@ export class ProductListComponent {
         alert(res.message)
       }
       else {
-        alert("Product added successfully.");
+        if (res.isEditProduct) {
+          alert("Product updated successfully.");
+        } else {
+          alert("Product added successfully.");
+        }
+
         this.refreshPage();
       }
     });
@@ -190,6 +196,7 @@ export class ProductListComponent {
       }
       else {
         this.productService.deleteProduct(product.id).subscribe(isDeleted => {
+          alert("Product deleted successfully.");
           this.refreshPage();
         });
       }

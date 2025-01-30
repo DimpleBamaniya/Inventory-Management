@@ -10,10 +10,10 @@ import { LayoutComponent } from '../layout/layout.component';
 
 @Component({
   selector: 'app-login',
-  standalone : true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule,LayoutComponent],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, LayoutComponent],
   templateUrl: './login.component.html',
-  providers: [UserService,HttpClient,CityService,DepartmentService],
+  providers: [UserService, HttpClient, CityService, DepartmentService],
   styleUrls: ['./login.component.scss']
 })
 
@@ -21,29 +21,29 @@ export class LoginComponent implements OnInit {
 
   //variable declaration
   isLoginUser: boolean = false;
-  loginUserDetails : any;
-  loginForm : FormGroup;
-  isSubmitted : boolean = false;
+  loginUserDetails: any;
+  loginForm: FormGroup;
+  isSubmitted: boolean = false;
 
   constructor(
-    private http: HttpClient, 
-    private userService: UserService, 
+    private http: HttpClient,
+    private userService: UserService,
     private router: Router,
     private _formBuilder: FormBuilder,
     private _activeRoute: ActivatedRoute
-  ) { 
+  ) {
     this.loginForm = this._formBuilder.group({
-      emailID: ['', Validators.compose([Validators.required,Validators.email])],
+      emailID: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
     });
   }
 
   ngOnInit(): void {
-    
+
   }
- 
+
   onLogin() {
-    this.isSubmitted =  true;
+    this.isSubmitted = true;
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -73,5 +73,5 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  
+
 }
