@@ -211,6 +211,7 @@ export class UserDetailComponent implements OnInit {
   OnChangeEdit() {
     this.isReadOnly = false;
     if (!(JSON.parse(this.loginUserDetails).permissions)) {
+
       this.userForm.controls['departmentID'].disable();
     } else {
       this.userForm.controls['departmentID'].enable();

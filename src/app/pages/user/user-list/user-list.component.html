@@ -44,13 +44,16 @@
 
   <nav>
     <ul class="pagination justify-content-center">
+      <li class="page-item d-flex align-items-center gap-2">
+        <label for="pageSizeDropdown">Page Size:</label>
+        <select class="form-select small-dropdown" id="pageSizeDropdown" (change)="changePageSize($event)"
+        [(ngModel)]="pagingParams.pageSize">
+        <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+      </select>
+    </li>
+    <li class="page-item">
       <span>Total Record: {{ totalRecords }}</span>
-      <li class="page-item">
-        <select class="form-select small-dropdown" (change)="changePageSize($event)"
-          [(ngModel)]="pagingParams.pageSize">
-          <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
-        </select>
-      </li>
+    </li>
       <li class="page-item">
         <button class="page-link" (click)="changePage(pagingParams.pageNo - 1)" [disabled]="pagingParams.pageNo === 1">
           Previous</button>

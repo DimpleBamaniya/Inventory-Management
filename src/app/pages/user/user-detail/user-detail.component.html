@@ -6,7 +6,8 @@
         <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
             <!-- First Name -->
             <div class="form-group">
-                <label for="firstName">First Name:</label>
+                <label for="firstName">First Name
+                <span class="mandatory">*</span></label>
                 <input [readonly]="isReadOnly" type="text" id="firstName" formControlName="firstName"
                     placeholder="Enter your first name" />
                 <div *ngIf="firstName?.invalid && firstName?.touched && isSubmited" class="error">
@@ -18,7 +19,7 @@
 
             <!-- Last Name -->
             <div class="form-group">
-                <label for="lastName">Last Name:</label>
+                <label for="lastName">Last Name<span class="mandatory">*</span></label>
                 <input [readonly]="isReadOnly" type="text" id="lastName" formControlName="lastName"
                     placeholder="Enter your last name">
                 <div *ngIf="lastName?.invalid && lastName?.touched && isSubmited" class="error">
@@ -30,7 +31,7 @@
 
             <!-- Email -->
             <div class="form-group" *ngIf="!isUpdateForm">
-                <label for="email">Email ID:</label>
+                <label for="email">Email ID<span class="mandatory">*</span></label>
                 <input [readonly]="isReadOnly" type="email" id="email" formControlName="emailID"
                     placeholder="Enter your email">
                 <div *ngIf="emailID?.invalid && emailID?.touched && isSubmited" class="error">
@@ -41,7 +42,7 @@
 
             <!-- Password -->
             <div class="form-group" *ngIf="!isUpdateForm">
-                <label for="password">Password:</label>
+                <label for="password">Password<span class="mandatory">*</span></label>
                 <input [readonly]="isReadOnly" type="password" id="password" formControlName="password"
                     placeholder="Enter your password">
                 <div *ngIf="password?.invalid && password?.touched && isSubmited" class="error">
@@ -52,7 +53,7 @@
 
             <!-- City -->
             <div class="form-group" *ngIf="isUpdateForm">
-                <label for="city">City:</label>
+                <label for="city">City<span class="mandatory">*</span></label>
                 <select id="city" formControlName="cityID">
                     <option value="{{ null }}" disabled>Select City</option>
                     <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
@@ -64,7 +65,7 @@
 
             <!-- Department -->
             <div class="form-group" *ngIf="isUpdateForm">
-                <label for="department">Department:</label>
+                <label for="department">Department<span *ngIf="isEditPermition" class="mandatory">*</span></label>
                 <select id="department" formControlName="departmentID">
                     <option value="{{ null }}" disabled>Select Department</option>
                     <option *ngFor="let department of departments" [value]="department.id">{{ department.name }}

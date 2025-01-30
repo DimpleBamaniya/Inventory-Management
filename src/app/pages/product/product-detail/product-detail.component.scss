@@ -117,6 +117,12 @@
       }
     }
   }
+
+  .mandatory {
+    color: red;
+    font-weight: bold;
+    margin-left: 4px;
+  }
 }
 
 // Animations
@@ -124,6 +130,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -134,6 +141,7 @@
     transform: scale(0.8);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;

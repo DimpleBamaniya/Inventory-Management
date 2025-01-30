@@ -6,7 +6,7 @@
     </div>
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="categoryID">Category:</label>
+        <label for="categoryID">Category<span class="mandatory">*</span></label>
         <select *ngIf="isAddFromUserDetail" id="categoryID" formControlName="categoryID"
           (change)="onChangeCategory($event)">
           <option value={{null}} disabled>Select Category</option>
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="brandID">Brand:</label>
+        <label for="brandID">Brand<span class="mandatory">*</span></label>
         <select id="brandID" formControlName="brandID">
           <option value={{null}} disabled>Select Brand</option>
           <ng-container *ngIf="!isAddFromUserDetail">
