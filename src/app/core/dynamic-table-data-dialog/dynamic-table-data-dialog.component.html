@@ -13,8 +13,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let column of tableDatalist">
-            <td>{{ column.id }}</td>
+          <tr *ngFor="let column of tableDatalist; let i = index">
+            <td>{{ i + 1}}</td>
             <td>{{ column.name }}</td>
           </tr>
         </tbody>

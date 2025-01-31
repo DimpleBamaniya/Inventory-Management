@@ -113,7 +113,7 @@ export class UserListComponent {
     this.userProductService.getProductListbyUserID(userid).subscribe(user => {
       if (user.data.length >= 1) {
         var userList = user.data;
-        this.columns = ['ID', 'Product']
+        this.columns = ['#', 'Product']
         const dialogRef = this.dialog.open(DynamicTableDataDialogComponent, {
           data: {
             columns: this.columns, // Passing dynamic column names

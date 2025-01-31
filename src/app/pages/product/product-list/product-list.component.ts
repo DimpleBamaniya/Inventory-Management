@@ -137,7 +137,7 @@ export class ProductListComponent {
   }
 
   openCategoryDialog(): void {
-    this.columns = ['ID', 'Product Category']
+    this.columns = ['#', 'Product Category']
     const dialogRef = this.dialog.open(DynamicTableDataDialogComponent, {
       data: {
         columns: this.columns, // Passing dynamic column names
@@ -154,7 +154,7 @@ export class ProductListComponent {
   }
 
   openBrandDialog(): void {
-    this.columns = ['ID', 'Product Brand']
+    this.columns = ['#', 'Product Brand']
     const dialogRef = this.dialog.open(DynamicTableDataDialogComponent, {
       data: {
         columns: this.columns, // Passing dynamic column names
@@ -178,7 +178,7 @@ export class ProductListComponent {
     this.productService.getUserListByProductID(product.id).subscribe(user => {
       if (user.data.length >= 1) {
         var userList = user.data;
-        this.columns = ['ID', 'User']
+        this.columns = ['#', 'User']
         const dialogRef = this.dialog.open(DynamicTableDataDialogComponent, {
           data: {
             columns: this.columns, // Passing dynamic column names
