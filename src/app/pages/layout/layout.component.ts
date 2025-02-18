@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LogoutComponent } from '../logout/logout.component';
 
@@ -8,7 +8,8 @@ import { LogoutComponent } from '../logout/logout.component';
   standalone: true,
   imports: [CommonModule, RouterLink, LogoutComponent],
   templateUrl: './layout.component.html',
-  styleUrl: './layout.component.scss'
+  styleUrl: './layout.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LayoutComponent implements OnInit {
 
@@ -73,7 +74,7 @@ export class LayoutComponent implements OnInit {
   }
 
   setProductButton(): void {
-    if ((this.router.url == ('/product/list') && this.isPermission) || (this.router.url == ('/aboutUs')) || (this.router.url == ('/unitTesting'))) {
+    if ((this.router.url == ('/product/list') && this.isPermission) || (this.router.url == ('/aboutUs')) || (this.router.url == ('/unitTesting')) || (this.router.url == ('/login'))) {
       this.isShowProduct = false;
     } else if (this.isPermission && this.router.url != '/userNotFound') {
       this.isShowProduct = true;

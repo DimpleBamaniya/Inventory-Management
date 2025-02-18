@@ -1,13 +1,5 @@
 <app-layout></app-layout>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="login.component.scss">
-</head>
-
-<body>
+<div  class="loginPage">
     <div class="form-container">
         <label for="loginForm" class="form-title">Login Form</label>
         <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
@@ -31,6 +23,4 @@
             </div>
         </form>
     </div>
-</body>
-
-</html>
+</div>

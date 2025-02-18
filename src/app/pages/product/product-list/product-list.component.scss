@@ -54,6 +54,71 @@ h1 {
   animation: fade-in 0.5s ease-in-out;
 }
 
+// Pagination Styles
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0; // Adjust margin as needed
+
+  .page-item {
+    display: flex;
+    align-items: center;
+
+    // Styles for the Page Size dropdown
+    .small-dropdown {
+      width: auto; // Adjust width as necessary
+      min-width: 80px; // Minimum width for the dropdown
+      margin-left: 10px; // Space between label and dropdown
+    }
+
+    // Styles for buttons
+    button {
+      margin: 0 5px; // Space between buttons
+      padding: 10px 15px; // Adjust padding for buttons
+      border-radius: 5px; // Rounded corners
+
+      &.btn-secondary {
+        background-color: #6c757d; // Bootstrap secondary color
+        color: white;
+
+        &:hover {
+          background-color: darken(#6c757d, 10%); // Darken on hover
+        }
+
+        &:disabled {
+          opacity: 0.65; // Style for disabled state
+          cursor: not-allowed; // Change cursor on disabled
+        }
+      }
+      
+      &.animated-btn {
+        background-color: #007bff; // Primary button color
+        color: white;
+
+        &:hover {
+          background-color: darken(#007bff, 10%); // Darken on hover
+        }
+        
+        &.mb-6 {
+          margin-bottom: 6px; // Specific bottom margin for this button
+        }
+
+        &.mb-8 {
+          margin-bottom: 8px; // Specific bottom margin for this button
+        }
+      }
+    }
+
+    // Additional styles for total records display
+    span {
+      margin: 0 10px; // Space around total records text
+      font-size: 14px; // Font size adjustment
+      color: #333; // Text color
+    }
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -63,16 +128,6 @@ h1 {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.pagination {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.pagination .btn {
-  padding: 5px 15px;
 }
 
 .form-group {
@@ -95,10 +150,6 @@ h1 {
     align-items: flex-start;
   }
 
-  .pagination {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }
 
 /* Adjusting search button styling */

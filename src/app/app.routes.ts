@@ -11,7 +11,6 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
-   
   },
   {
     path: 'login',
@@ -32,7 +31,7 @@ export const routes: Routes = [
   {
     path: 'userNotFound',
     component: UserNotFoundComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'user',

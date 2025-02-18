@@ -1,5 +1,5 @@
 /* General styles for the body */
-body {
+.loginPage {
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
@@ -8,7 +8,7 @@ body {
     height: 100vh;            /* Take full viewport height */
     background-color: #f4f4f4; /* Light background color */
   }
-  
+
   /* Container for the form and title */
   .form-container {
     display: flex;

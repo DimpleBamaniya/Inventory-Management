@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { CityService } from '../city/city.service';
 import { DepartmentService } from '../department/department.service';
 import { LayoutComponent } from '../layout/layout.component';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ import { LayoutComponent } from '../layout/layout.component';
 
 export class LoginComponent implements OnInit {
 
-  //variable declaration
+  // Variable declaration
   isLoginUser: boolean = false;
   loginUserDetails: any;
   loginForm: FormGroup;
@@ -38,17 +39,31 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   onLogin() {
     this.isSubmitted = true;
+
+    const logInPassword = this.loginForm.value.password?.trim();
+    const logInMail= this.loginForm.value.emailID?.trim();
+    this.loginForm.patchValue({ password: logInPassword });
+    this.loginForm.patchValue({ emailID: logInMail });
+
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
     }
-    this.userService.login(this.loginForm.value).subscribe((res: any) => {
+
+    // Hash the password before sending it
+    const hashedPassword = CryptoJS.SHA256(this.loginForm.value.password).toString();
+
+    // Create a new object with email and hashed password
+    const loginData = {
+      emailID: this.loginForm.value.emailID,
+      password: this.loginForm.value.password,
+    };
+
+    this.userService.login(loginData).subscribe((res: any) => {
       if (res.data != null) {
         this.isLoginUser = true;
         this.loginUserDetails = res.data;
@@ -59,7 +74,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl(`/user/detail/${this.loginUserDetails.id}`);
         }
       } else {
-        alert(res.message,);
+        alert(res.message);
       }
     });
   }
@@ -72,6 +87,4 @@ export class LoginComponent implements OnInit {
   get password() {
     return this.loginForm.get('password');
   }
-
-
 }

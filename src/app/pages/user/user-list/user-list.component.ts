@@ -4,7 +4,8 @@ import { BasicPagingParams } from '../../../core/sharedModels/paging-params.mode
 import { Router } from '@angular/router';
 import { UserProductService } from '../../user-product/user-product.service';
 import { DynamicTableDataDialogComponent } from '../../../core/dynamic-table-data-dialog/dynamic-table-data-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../../core/confirmation-dialog/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-user-list',
@@ -125,25 +126,49 @@ export class UserListComponent {
         });
 
         // After dialog closes, navigate back to the product list
-        dialogRef.afterClosed().subscribe(() => {
-          this.router.navigateByUrl('/user/list');
-        });
+        dialogRef.afterClosed();
       }
       else {
-        var param = {
-          userId: userid,
-          deletedBy: (JSON.parse(this.loginUserDetails).id)
+        this.confirmationDialog("Remove Product", "Are you sure you want to unassign the product?")
+      .then((confirmed) => {
+        if (confirmed) {
+          var param = {
+            userId: userid,
+            deletedBy: (JSON.parse(this.loginUserDetails).id)
+          }
+          this.userService.DeleteUser(param).subscribe(isDeleted => {
+            alert("User deleted successfully.")
+            this.refreshPage();
+          });
         }
-        this.userService.DeleteUser(param).subscribe(isDeleted => {
-          alert("User deleted successfully.")
-          this.refreshPage();
-        });
+      })
+      .catch(() => {
+        console.log("User canceled deletion.");
+      });
+       
       }
     });
   }
 
   refreshPage() {
     window.location.reload();
+  }
+
+  confirmationDialog(title: string, message: string): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      const dialogRef: MatDialogRef<ConfirmationDialogComponent> = this.dialog.open(ConfirmationDialogComponent, {
+        data: {
+          title: title,
+          message: message,
+        },
+        width: '500px',
+      });
+
+      dialogRef.afterClosed().subscribe((result: boolean) => {
+        // `result` will be `true` if the user clicked 'Confirm', and `false` otherwise.
+        resolve(result);
+      });
+    });
   }
 
 }

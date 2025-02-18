@@ -6,6 +6,8 @@ import { UserListComponent } from './user-list/user-list.component';
 import { LayoutComponent } from '../layout/layout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from '../../auth.guard';
+import { ConfirmationDialogComponent } from '../../core/confirmation-dialog/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogService } from '../../core/confirmation-dialog/confirmation-dialog.service';
 
 export const routes: Routes = [
 {
@@ -27,9 +29,10 @@ export const routes: Routes = [
     LayoutComponent,
     ReactiveFormsModule,
     FormsModule,
-    RouterLink],
+    RouterLink,
+    ConfirmationDialogComponent],
   exports:[],
-  providers: [],
+  providers: [ConfirmationDialogService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: []
 })

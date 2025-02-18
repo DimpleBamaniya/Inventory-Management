@@ -32,10 +32,11 @@ export class ProductDetailComponent {
   productForm: FormGroup;
   dataForSave: any = null;
   loginUserDetails: any = null;
-  isAddFromUserDetail: boolean = false;
+  isAssignProduct: boolean = false;
   productBrandsByCategoryID: any = null;
   isSubmitted: boolean = false;
   isAvailableBrandByCategoryID: boolean = false;
+  isShowLabelForNoBrandAvailable: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ProductDetailComponent>,
@@ -63,8 +64,8 @@ export class ProductDetailComponent {
       this.router.navigateByUrl(`/login`);
     }
     if (this.data.tableData != null && this.data.tableData != 0) {
-      if (this.data.tableData.isAddFromUserDetail) {
-        this.isAddFromUserDetail = this.data.tableData.isAddFromUserDetail;
+      if (this.data.tableData.isAssignProduct) {
+        this.isAssignProduct = this.data.tableData.isAssignProduct;
         this.dialogLabel = 'Assign Product';
       } else {
         this.dialogLabel = 'Edit Product Stock';
@@ -116,8 +117,21 @@ export class ProductDetailComponent {
     this.productBrandService.GetBrandsByCategoryID(Number(selectedId)).subscribe((pb) => {
       this.productForm.controls['brandID'].setValue(null);
       this.productBrandsByCategoryID = pb.data;
-      this.isAvailableBrandByCategoryID = this.productBrandsByCategoryID.length > 0 ? false : true;
+
+      this.isAvailableBrandByCategoryID = this.productBrandsByCategoryID.length >= 1 ? true : false;
+
+      if(!this.isAvailableBrandByCategoryID){
+        this.isShowLabelForNoBrandAvailable = true;
+      }
     });
+  }
+
+  onButtonClickProductList(){
+    let param = {
+      isClosePopUp: true
+    }
+    this.dialogRef.close(param);
+    this.router.navigateByUrl('/product/list');
   }
 
   onSubmit() {
@@ -139,7 +153,7 @@ export class ProductDetailComponent {
         this.dataForSave.quantity = this.productForm.controls['quantity'].value;
         this.dataForSave.createdBy = (JSON.parse(this.loginUserDetails).id);
       }
-      if (this.isAddFromUserDetail) {
+      if (this.isAssignProduct) {
         this.dataForSave.id = this.data.tableData.userID;
         this.dataForSave.categoryID = this.productForm.controls['categoryID'].value;
         this.dataForSave.brandID = this.productForm.controls['brandID'].value;
@@ -150,7 +164,6 @@ export class ProductDetailComponent {
         });
       } else {
         this.productService.saveProduct(this.dataForSave).subscribe(productdetail => {
-          debugger
           productdetail.isEditProduct = this.buttonName == 'Edit';
           this.dialogRef.close(productdetail);
         });

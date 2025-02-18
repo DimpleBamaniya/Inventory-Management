@@ -3,10 +3,11 @@ import { BasicPagingParams } from '../../../core/sharedModels/paging-params.mode
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
 import { ProductCategoryService } from '../../product-category/product-category.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DynamicTableDataDialogComponent } from '../../../core/dynamic-table-data-dialog/dynamic-table-data-dialog.component';
 import { ProductBrandService } from '../../product-brand/product-brand.service';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
+import { ConfirmationDialogComponent } from '../../../core/confirmation-dialog/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-product-list',
@@ -117,7 +118,6 @@ export class ProductListComponent {
 
     // After dialog closes, navigate back to the product list
     dialogRef.afterClosed().subscribe((res) => {
-      debugger
       if (res.isClosePopUp) {
         dialogRef.close();
       }
@@ -150,6 +150,23 @@ export class ProductListComponent {
     // After dialog closes, navigate back to the product list
     dialogRef.afterClosed().subscribe(() => {
       this.router.navigateByUrl('/product/list');
+    });
+  }
+
+  confirmationDialog(title: string, message: string): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      const dialogRef: MatDialogRef<ConfirmationDialogComponent> = this.dialog.open(ConfirmationDialogComponent, {
+        data: {
+          title: title,
+          message: message,
+        },
+        width: '500px',
+      });
+
+      dialogRef.afterClosed().subscribe((result: boolean) => {
+        // `result` will be `true` if the user clicked 'Confirm', and `false` otherwise.
+        resolve(result);
+      });
     });
   }
 
@@ -195,10 +212,18 @@ export class ProductListComponent {
         });
       }
       else {
-        this.productService.deleteProduct(product.id).subscribe(isDeleted => {
-          alert("Product deleted successfully.");
-          this.refreshPage();
-        });
+        this.confirmationDialog("Product Delete", "Are you sure you want to delete the product?")
+          .then((confirmed) => {
+            if (confirmed) {
+              this.productService.deleteProduct(product.id).subscribe(() => {
+                alert("Product deleted successfully.");
+                this.refreshPage();
+              });
+            }
+          })
+          .catch(() => {
+            console.log("User canceled deletion.");
+          });
       }
     });
   }

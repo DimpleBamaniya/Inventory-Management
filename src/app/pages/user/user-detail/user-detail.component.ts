@@ -6,7 +6,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserProductService } from '../../user-product/user-product.service';
 import { ProductDetailComponent } from '../../product/product-detail/product-detail.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../../core/confirmation-dialog/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-user-detail',
@@ -56,6 +57,12 @@ export class UserDetailComponent implements OnInit {
     this.userForm.controls['cityID'].disable();
     this.userForm.controls['departmentID'].disable();
     this.loginUserDetails = localStorage.getItem('loginUserDetails');
+    if (!(JSON.parse(this.loginUserDetails).permissions)) {
+      this.isEditPermition = false;
+    } else {
+      this.isEditPermition = true;
+    }
+
     if (this.loginUserDetails == null) {
       this.router.navigateByUrl(`/login`);
     }
@@ -70,6 +77,7 @@ export class UserDetailComponent implements OnInit {
       this.userForm.get('emailID')?.updateValueAndValidity();
       this.userForm.get('cityID')?.setValidators(null);
       this.userForm.get('cityID')?.updateValueAndValidity();
+      this.labelForAddUser = "Add User"
     } else {
       this.getProductListbyUserID(this.userID).then((userProductDetail) => {
         if (userProductDetail.length != null && userProductDetail.length != 0 && userProductDetail.length >= 1) {
@@ -184,7 +192,6 @@ export class UserDetailComponent implements OnInit {
       }
 
       this.userService.saveUser(this.dataForSave).subscribe(userdetail => {
-        debugger
         if (this.isUpdateForm) {
           if (userdetail.data == null && userdetail.message) {
             alert(userdetail.message);
@@ -259,7 +266,7 @@ export class UserDetailComponent implements OnInit {
   onAddProduct() {
     var params = {
       userID: this.userID,
-      isAddFromUserDetail: true
+      isAssignProduct: true
     }
     const dialogRef = this.dialog.open(ProductDetailComponent, {
       data: {
@@ -282,9 +289,34 @@ export class UserDetailComponent implements OnInit {
   }
 
   onDeleteProduct(userProductID: any) {
-    this.userProductService.deleteUserProduct(userProductID).subscribe(isDeleted => {
-      alert("Product deleted successfully.")
-      this.refreshPage();
+    this.confirmationDialog("Remove Product", "Are you sure you want to unassign the product?")
+      .then((confirmed) => {
+        if (confirmed) {
+          this.userProductService.deleteUserProduct(userProductID).subscribe(isDeleted => {
+            alert("Product unassigned successfully.")
+            this.refreshPage();
+          });
+        }
+      })
+      .catch(() => {
+        console.log("User canceled deletion.");
+      });
+  }
+
+  confirmationDialog(title: string, message: string): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      const dialogRef: MatDialogRef<ConfirmationDialogComponent> = this.dialog.open(ConfirmationDialogComponent, {
+        data: {
+          title: title,
+          message: message,
+        },
+        width: '500px',
+      });
+
+      dialogRef.afterClosed().subscribe((result: boolean) => {
+        // `result` will be `true` if the user clicked 'Confirm', and `false` otherwise.
+        resolve(result);
+      });
     });
   }
 

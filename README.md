@@ -31,10 +31,4 @@ git push origin -f
  
 //each dialog close event check
 
-<!-- // "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ] -->
  

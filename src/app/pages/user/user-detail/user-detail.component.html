@@ -50,9 +50,8 @@
                     <div *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters long.</div>
                 </div>
             </div>
-
             <!-- City -->
-            <div class="form-group" *ngIf="isUpdateForm">
+            <div class="form-group" *ngIf="isEditPermition">
                 <label for="city">City<span class="mandatory">*</span></label>
                 <select id="city" formControlName="cityID">
                     <option value="{{ null }}" disabled>Select City</option>
@@ -127,7 +126,7 @@
                         <td>{{ i + 1 }}</td>
                         <td>{{ product.name }}</td>
                         <td>
-                            <button class="delete-btn" (click)="onDeleteProduct(product.userProductID)">Delete</button>
+                            <button class="delete-btn" (click)="onDeleteProduct(product.userProductID)">Remove</button>
                         </td>
                     </tr>
                 </ng-container>

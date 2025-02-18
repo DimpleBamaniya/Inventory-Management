@@ -48,28 +48,44 @@
   </table>
 
   <!-- Pagination -->
-  <div class="d-flex justify-content-between align-items-center">
-    <!-- Page Size Dropdown -->
-    <div class="form-group">
-      <label for="pageSizeDropdown">Page Size:</label>
-      <select id="pageSizeDropdown" class="form-control w-auto" [(ngModel)]="pagingParams.pageSize"
-        (change)="onPageSizeChange()">
-        <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
-      </select>
-    </div>
-
-    <!-- Pagination Controls -->
-    <div class="pagination">
-      <span>Total Record: {{ totalRecords }}</span>
-      <button class="btn btn-secondary" (click)="prevPage()" [disabled]="pagingParams.pageNo === 1">Previous</button>
-      <span>Page {{ pagingParams.pageNo }} of {{ totalPages }}</span>
-      <button class="btn btn-secondary" (click)="nextPage()"
-        [disabled]="pagingParams.pageNo === totalPages">Next</button>
-    </div>
-    <div>
-      <button class="btn animated-btn mb-6" (click)="openCategoryDialog()">Product Category</button>
-      <button class="btn animated-btn mb-8" (click)="openBrandDialog()">Product Brand</button>
-    </div>
-
-  </div>
+  <nav>
+    <ul class="pagination justify-content-center align-items-center">
+      <!-- Page Size Dropdown -->
+      <li class="page-item d-flex align-items-center gap-0">
+        <span class="me-0">Page Size</span>
+        <select class="form-select small-dropdown" id="pageSizeDropdown" (change)="onPageSizeChange()" [(ngModel)]="pagingParams.pageSize">
+          <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+        </select>
+      </li>
+  
+      <!-- Total Records Display -->
+      <li class="page-item">
+        <span>Total Record: {{ totalRecords }}</span>
+      </li>
+  
+      <!-- Previous Button -->
+      <li class="page-item">
+        <button class="btn btn-secondary" (click)="prevPage()" [disabled]="pagingParams.pageNo === 1">Previous</button>
+      </li>
+  
+      <!-- Current Page Display -->
+      <li class="page-item">
+        <span>Page {{ pagingParams.pageNo }} of {{ totalPages }}</span>
+      </li>
+  
+      <!-- Next Button -->
+      <li class="page-item">
+        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="pagingParams.pageNo === totalPages">Next</button>
+      </li>
+  
+      <!-- Additional Buttons for Product Category and Brand -->
+      <li class="page-item">
+        <button class="btn animated-btn mb-6" (click)="openCategoryDialog()">Product Category</button>
+      </li>
+      <li class="page-item">
+        <button class="btn animated-btn mb-8" (click)="openBrandDialog()">Product Brand</button>
+      </li>
+    </ul>
+  </nav>
+  
 </div>
